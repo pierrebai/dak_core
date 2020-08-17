@@ -78,15 +78,6 @@ namespace dak_ns::core_ns
       friend struct ref_t<array_t>;
    };
 
-   template <>
-   struct convert_any_op<bool, array_t>
-   {
-      bool operator()(const array_t& from) const
-      {
-         return from.size() != 0;
-      }
-   };
-
 }
 
 #endif /* DAK_CORE_ARRAY_H */

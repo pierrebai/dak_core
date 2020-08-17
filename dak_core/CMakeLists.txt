@@ -1,7 +1,7 @@
 
 add_library(dak_core
    include/dak/core/all.h
-   include/dak/core/any_helpers.h
+   include/dak/core/any_ops.h             src/any_ops.cpp
    include/dak/core/array.h               src/array.cpp
    include/dak/core/dict.h                src/dict.cpp
    include/dak/core/internal_names.h
@@ -21,4 +21,6 @@ target_include_directories(dak_core PUBLIC
 )
 
 target_compile_features(dak_core PUBLIC cxx_std_20)
+
+target_compile_options(dak_core PRIVATE /bigobj)
 

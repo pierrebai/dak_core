@@ -46,7 +46,7 @@ namespace tests
          dict_t d1;
 
          d1[name_t::window] = 3;
-         d1[name_t::canvas] = 4;
+         d1[name_t::canvas] = int64_t(4);
          d1[name_t::point] = 5.0;
          d1[name_t::width].as<dict_t>()[name_t::border] = name_t::window;
 
@@ -58,7 +58,7 @@ namespace tests
          Assert::AreEqual<index_t>(4, d2.size());
 
          Assert::AreEqual<int32_t>(3, d2[name_t::window]);
-         Assert::AreEqual<int64>(4, d2[name_t::canvas]);
+         Assert::AreEqual<int64_t>(4, d2[name_t::canvas]);
          Assert::AreEqual<double>(5.0, d2[name_t::point]);
          Assert::AreEqual<name_t>(name_t::window, d2[name_t::width].as<dict_t>()[name_t::border]);
 

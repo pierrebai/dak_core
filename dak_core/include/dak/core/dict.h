@@ -63,15 +63,6 @@ namespace dak_ns::core_ns
       friend struct ref_t<dict_t>;
    };
 
-   template <>
-   struct convert_any_op<bool, dict_t>
-   {
-      bool operator()(const dict_t& from) const
-      {
-         return from.size() != 0;
-      }
-   };
-
 }
 
 #endif /* DAK_CORE_DICT_H */

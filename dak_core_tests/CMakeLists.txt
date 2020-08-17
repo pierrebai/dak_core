@@ -1,5 +1,6 @@
 
 add_library(dak_core_tests SHARED
+   src/any_ops_tests.cpp
    src/array_tests.cpp
    src/dict_tests.cpp
    src/var_tests.cpp

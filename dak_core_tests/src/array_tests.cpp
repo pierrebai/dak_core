@@ -44,7 +44,7 @@ namespace tests
          array_t a1;
 
          a1.grow() = 3;
-         a1.grow() = 4;
+         a1.grow() = int64_t(4);
          a1.grow() = 5.0;
          a1.grow() = L"6";
 

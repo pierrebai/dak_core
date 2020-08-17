@@ -9,7 +9,7 @@
 
 #include <dak/core/types.h>
 #include <dak/core/name.h>
-#include <dak/core/any_helpers.h>
+#include <dak/core/any_ops.h>
 #include <dak/core/var_ops.h>
 
 #include <any>
@@ -143,7 +143,7 @@ namespace dak_ns::core_ns
       // All integer-like types are equivalent, so you can read a boolean
       // from an integer. Same for double-like types, float and double.
       template <class T>
-      bool compatible() const { return compatible_any<T>(my_value); }
+      bool compatible() const { return is_compatible_op_t::call<T>(my_value); }
 
       // Clear the old data and set the type. Clear even if same type.
       // Returns true if the type was successfully set.
@@ -165,7 +165,7 @@ namespace dak_ns::core_ns
       {
          if (my_value.type() == typeid(T))
             return true;
-         const T new_value(convert_any<T>(my_value));
+         const T new_value(convert_op_t::call<T>(my_value));
          return reset<T>(new_value);
       }
 
@@ -194,7 +194,7 @@ namespace dak_ns::core_ns
          if (verify<T>())
             return std::any_cast<const T&>(my_value);
          if (compatible<T>())
-            return convert_any<T>(my_value);
+            return convert_op_t::call<T>(my_value);
          return {};
       }
 
