@@ -23,6 +23,10 @@ namespace dak_ns::core_ns
 
    struct var_t
    {
+      // Access.
+      virtual bool set_any(std::any& a_value) = 0;
+      virtual std::any get_any() const = 0;
+
       // Type.
       virtual const std::type_info& get_type() const = 0;
 
@@ -55,7 +59,7 @@ namespace dak_ns::core_ns
    //
    // Variable in objects.
 
-   template <class C, class T, name_t N>
+   template <class C, class T>
    struct member_var_t : var_t
    {
       // Construction.
@@ -70,6 +74,9 @@ namespace dak_ns::core_ns
       name_t get_name() const { return N; }
 
       // Access.
+      bool set_any(std::any& a_value) override;
+      std::any get_any() const override;
+
       operator T& () { return my_value; }
       operator const T& () const { return my_value; }
 
@@ -85,6 +92,7 @@ namespace dak_ns::core_ns
 
    private:
       T my_value;
+      std::any my_any;
    };
 
    //////////////////////////////////////////////////////////////////////////
@@ -112,6 +120,9 @@ namespace dak_ns::core_ns
       const std::type_info& get_type() const override { return my_value.type(); }
 
       // Access.
+      bool set_any(std::any& a_value) override { my_value = a_value; return true; }
+      std::any get_any() const override { return my_value; }
+
       std::any& as_any() { return my_value; }
       const std::any& as_any() const { return my_value; }
 

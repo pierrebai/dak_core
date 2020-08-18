@@ -13,42 +13,46 @@ namespace tests
 	public:
 		TEST_METHOD(dict_base)
 		{
+         initialize_names();
+
          dict_t d1;
 
          Assert::AreEqual<index_t>(0, d1.size());
 
-         d1[name_t::window] = 3;
-         d1[name_t::canvas] = 4;
-         d1[name_t::point] = 5.0;
-         d1[name_t::width] = L"6";
-         d1[name_t::border] = name_t::window;
+         d1[ns::window] = 3;
+         d1[ns::canvas] = 4;
+         d1[ns::point] = 5.0;
+         d1[ns::width] = L"6";
+         d1[ns::border] = ns::window;
 
          Assert::AreEqual<index_t>(5, d1.size());
 
-         Assert::AreEqual<int32_t>(3, d1[name_t::window]);
-         Assert::AreEqual<int64_t>(4, d1[name_t::canvas]);
-         Assert::AreEqual<double>(5.0, d1[name_t::point]);
-         Assert::AreEqual<text_t>(L"6", d1[name_t::width]);
-         Assert::AreEqual<name_t>(name_t::window, d1[name_t::border]);
+         Assert::AreEqual<int32_t>(3, d1[ns::window]);
+         Assert::AreEqual<int64_t>(4, d1[ns::canvas]);
+         Assert::AreEqual<double>(5.0, d1[ns::point]);
+         Assert::AreEqual<text_t>(L"6", d1[ns::width]);
+         Assert::AreEqual<name_t>(ns::window, d1[ns::border]);
 
-         Assert::IsTrue(d1.erase(name_t::window));
-         Assert::IsTrue(d1.erase(name_t::canvas));
-         Assert::IsTrue(d1.erase(name_t::border));
-         Assert::IsTrue(d1.erase(name_t::width));
-         Assert::IsTrue(d1.erase(name_t::point));
-         Assert::IsFalse(d1.erase(name_t::window));
+         Assert::IsTrue(d1.erase(ns::window));
+         Assert::IsTrue(d1.erase(ns::canvas));
+         Assert::IsTrue(d1.erase(ns::border));
+         Assert::IsTrue(d1.erase(ns::width));
+         Assert::IsTrue(d1.erase(ns::point));
+         Assert::IsFalse(d1.erase(ns::window));
 
          Assert::AreEqual<index_t>(0, d1.size());
       }
 
       TEST_METHOD(dict_append)
       {
+         initialize_names();
+
          dict_t d1;
 
-         d1[name_t::window] = 3;
-         d1[name_t::canvas] = int64_t(4);
-         d1[name_t::point] = 5.0;
-         d1[name_t::width].as<dict_t>()[name_t::border] = name_t::window;
+         d1[ns::window] = 3;
+         d1[ns::canvas] = int64_t(4);
+         d1[ns::point] = 5.0;
+         d1[ns::width].as<dict_t>()[ns::border] = ns::window;
 
          dict_t d2;
 
@@ -57,41 +61,43 @@ namespace tests
          Assert::AreEqual<index_t>(4, d1.size());
          Assert::AreEqual<index_t>(4, d2.size());
 
-         Assert::AreEqual<int32_t>(3, d2[name_t::window]);
-         Assert::AreEqual<int64_t>(4, d2[name_t::canvas]);
-         Assert::AreEqual<double>(5.0, d2[name_t::point]);
-         Assert::AreEqual<name_t>(name_t::window, d2[name_t::width].as<dict_t>()[name_t::border]);
+         Assert::AreEqual<int32_t>(3, d2[ns::window]);
+         Assert::AreEqual<int64_t>(4, d2[ns::canvas]);
+         Assert::AreEqual<double>(5.0, d2[ns::point]);
+         Assert::AreEqual<name_t>(ns::window, d2[ns::width].as<dict_t>()[ns::border]);
 
-         Assert::IsTrue(d2.contains(name_t::window));
-         Assert::IsTrue(d2.contains(name_t::canvas));
-         Assert::IsTrue(d2.contains(name_t::point));
-         Assert::IsTrue(d2.contains(name_t::width));
-         Assert::IsTrue(d2.contains(name_t::width));
-         Assert::IsTrue(d2[name_t::width].as<dict_t>().contains(name_t::border));
+         Assert::IsTrue(d2.contains(ns::window));
+         Assert::IsTrue(d2.contains(ns::canvas));
+         Assert::IsTrue(d2.contains(ns::point));
+         Assert::IsTrue(d2.contains(ns::width));
+         Assert::IsTrue(d2.contains(ns::width));
+         Assert::IsTrue(d2[ns::width].as<dict_t>().contains(ns::border));
 
          Assert::AreEqual(d1, d2);
       }
 
       TEST_METHOD(dict_iterator)
       {
+         initialize_names();
+
          dict_t d1;
 
-         d1[name_t::window] = 3;
-         d1[name_t::canvas] = 4;
-         d1[name_t::point] = 5.0;
-         d1[name_t::width] = L"6";
+         d1[ns::window] = 3;
+         d1[ns::canvas] = 4;
+         d1[ns::point] = 5.0;
+         d1[ns::width] = L"6";
 
          int32_t count = 0;
          for (const auto& i : d1)
          {
             count += 1;
-            if (i.first == name_t::window)
+            if (i.first == ns::window)
                Assert::AreEqual<int32_t>(3, i.second);
-            if (i.first == name_t::canvas)
+            if (i.first == ns::canvas)
                Assert::AreEqual<int64>(4, i.second);
-            if (i.first == name_t::point)
+            if (i.first == ns::point)
                Assert::AreEqual<double>(5.0, i.second);
-            if (i.first == name_t::width)
+            if (i.first == ns::width)
                Assert::AreEqual<text_t>(L"6", i.second);
          }
 

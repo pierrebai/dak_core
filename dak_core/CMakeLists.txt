@@ -2,6 +2,9 @@
 add_library(dak_core
    include/dak/core/all.h
    include/dak/core/any_ops.h             src/any_ops.cpp
+                                          src/any_convert_op.cpp
+                                          src/any_is_compatible_op.cpp
+                                          src/any_to_text_op.cpp
    include/dak/core/array.h               src/array.cpp
    include/dak/core/dict.h                src/dict.cpp
    include/dak/core/internal_names.h

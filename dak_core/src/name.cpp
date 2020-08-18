@@ -4,15 +4,26 @@
 
 #include <dak/core/name.h>
 
-#include <atomic>
-
 namespace dak_ns::core_ns
 {
-   std::atomic<uint32_t> last_name = int32_t(name_t::last_well_known_name);
+   //////////////////////////////////////////////////////////////////////////
+   //
+   // Well-known names namespace.
 
-   name_t make_name(const text_t& name)
+   namespace ns
    {
-      return name_t(last_name.fetch_add(1));
+      #define DAK_CORE_INTERNAL_NAME_DECL(n) name_t n(L#n)
+      #define DAK_CORE_INTERNAL_NAME_SEP ;
+      #define DAK_CORE_INTERNAL_NAME_FINAL ;
+      #include <dak/core/internal_names.h>
+      #undef DAK_CORE_INTERNAL_NAME_DECL
+      #undef DAK_CORE_INTERNAL_NAME_SEP
+      #undef DAK_CORE_INTERNAL_NAME_FINAL
    }
 
+   void initialize_names()
+   {
+      // Needed so that the global well-known names are initialized in the tests.
+      // All that is needed is to enter this file to create the globals.
+   }
 }

@@ -46,7 +46,7 @@ namespace tests
          any_var_t e_r2(8.0);
          any_var_t e_a((array_t()));
          any_var_t e_d((dict_t()));
-         any_var_t e_n(name_t::view);
+         any_var_t e_n(ns::view);
 
          Assert::AreEqual(typeid(void), e_u.get_type());
          Assert::AreEqual(typeid(text_t), e_t1.get_type());
@@ -103,7 +103,7 @@ namespace tests
          e_r2 = 8.0;
          e_a  = array_t();
          e_d  = dict_t();
-         e_n  = name_t::view;
+         e_n  = ns::view;
 
          Assert::AreEqual(typeid(void), e_u.get_type());
          Assert::AreEqual(typeid(text_t), e_t1.get_type());
@@ -156,7 +156,7 @@ namespace tests
          any_var_t e_r2(8.0);
          any_var_t e_a((array_t()));
          any_var_t e_d((dict_t()));
-         any_var_t e_n(name_t::view);
+         any_var_t e_n(ns::view);
 
          Assert::AreEqual<int32_t>(0, e_u);
          Assert::AreEqual<text_t>(text_t(L"text_t"), e_t1);
@@ -174,7 +174,7 @@ namespace tests
          Assert::AreEqual<double>(8.0, e_r2);
          Assert::AreEqual<array_t>((array_t()), e_a);
          Assert::AreEqual<dict_t>((dict_t()), e_d);
-         Assert::AreEqual<name_t>(name_t::view, e_n);
+         Assert::AreEqual<name_t>(ns::view, e_n);
       }
 
       TEST_METHOD(element_const_conversion)
@@ -195,7 +195,7 @@ namespace tests
          const any_var_t e_r2(8.0);
          const any_var_t e_a((array_t()));
          const any_var_t e_d((dict_t()));
-         const any_var_t e_n(name_t::view);
+         const any_var_t e_n(ns::view);
 
          Assert::AreEqual<int32_t>(0, e_u);
          Assert::AreEqual<text_t>(text_t(L"text_t"), e_t1);
@@ -213,7 +213,7 @@ namespace tests
          Assert::AreEqual<double>(8.0, e_r2);
          Assert::AreEqual<array_t>((array_t()), e_a);
          Assert::AreEqual<dict_t>((dict_t()), e_d);
-         Assert::AreEqual<name_t>(name_t::view, e_n);
+         Assert::AreEqual<name_t>(ns::view, e_n);
       }
 
       TEST_METHOD(element_unknown_assignments)
@@ -234,7 +234,7 @@ namespace tests
          any_var_t e_r2(8.0);
          any_var_t e_a((array_t()));
          any_var_t e_d((dict_t()));
-         any_var_t e_n(name_t::view);
+         any_var_t e_n(ns::view);
 
          // Assigning an empty any_var_t of get_type void
          // should set the get_type to void and reset the value.
@@ -296,9 +296,9 @@ namespace tests
       TEST_METHOD(element_size)
       {
          dict_t d;
-         d[name_t::view] = 33;
-         d[name_t::vector] = 4;
-         d[name_t::matrix] = 5;
+         d[ns::view] = 33;
+         d[ns::vector] = 4;
+         d[ns::matrix] = 5;
 
          array_t a;
          a.grow() = 55;
@@ -321,7 +321,7 @@ namespace tests
          const any_var_t e_r2(8.0);
          const any_var_t e_a(a);
          const any_var_t e_d(d);
-         const any_var_t e_n(name_t::view);
+         const any_var_t e_n(ns::view);
 
          //Assert::AreEqual<index_t>(0, e_u.size());
          //Assert::AreEqual<index_t>(4, e_t1.size());
@@ -345,9 +345,9 @@ namespace tests
       TEST_METHOD(element_compatible)
       {
          dict_t d;
-         d[name_t::view] = 33;
-         d[name_t::vector] = 4;
-         d[name_t::matrix] = 5;
+         d[ns::view] = 33;
+         d[ns::vector] = 4;
+         d[ns::matrix] = 5;
 
          array_t a;
          a.grow() = 55;
@@ -370,7 +370,7 @@ namespace tests
          const any_var_t e_r2(8.0);
          const any_var_t e_a(a);
          const any_var_t e_d(d);
-         const any_var_t e_n(name_t::view);
+         const any_var_t e_n(ns::view);
 
          Assert::IsTrue(e_t1.compatible<text_t>());
          Assert::IsTrue(e_t2.compatible<text_t>());
@@ -417,9 +417,9 @@ namespace tests
       TEST_METHOD(element_reset)
       {
          dict_t d;
-         d[name_t::view] = 33;
-         d[name_t::vector] = 4;
-         d[name_t::matrix] = 5;
+         d[ns::view] = 33;
+         d[ns::vector] = 4;
+         d[ns::matrix] = 5;
 
          array_t a;
          a.grow() = 55;
@@ -442,7 +442,7 @@ namespace tests
          any_var_t e_r2(8.0);
          any_var_t e_a(a);
          any_var_t e_d(d);
-         any_var_t e_n(name_t::view);
+         any_var_t e_n(ns::view);
 
          e_u.reset();
          e_t1.reset();
@@ -541,9 +541,9 @@ namespace tests
       TEST_METHOD(element_ensure_preserve_value)
       {
          dict_t d;
-         d[name_t::view] = 33;
-         d[name_t::vector] = 4;
-         d[name_t::matrix] = 5;
+         d[ns::view] = 33;
+         d[ns::vector] = 4;
+         d[ns::matrix] = 5;
 
          array_t a;
          a.grow() = 55;
@@ -566,7 +566,7 @@ namespace tests
          any_var_t e_r2(8.0);
          any_var_t e_a(a);
          any_var_t e_d(d);
-         any_var_t e_n(name_t::view);
+         any_var_t e_n(ns::view);
 
          // Ensuring the same get_type should not reset the value.
          e_u.reset();
@@ -621,7 +621,7 @@ namespace tests
          Assert::AreEqual<double>(8.0, e_r2);
          Assert::AreEqual<array_t>(a, e_a);
          Assert::AreEqual<dict_t>(d, e_d);
-         Assert::AreEqual<name_t>(name_t::view, e_n);
+         Assert::AreEqual<name_t>(ns::view, e_n);
 
          // Ensuring a similar get_type should preserve most of the value.
          e_u.ensure<int64_t>();
@@ -665,9 +665,9 @@ namespace tests
       TEST_METHOD(element_verify)
       {
          dict_t d;
-         d[name_t::view] = 33;
-         d[name_t::vector] = 4;
-         d[name_t::matrix] = 5;
+         d[ns::view] = 33;
+         d[ns::vector] = 4;
+         d[ns::matrix] = 5;
 
          array_t a;
          a.grow() = 55;
@@ -690,7 +690,7 @@ namespace tests
          any_var_t e_r2(8.0);
          any_var_t e_a(a);
          any_var_t e_d(d);
-         any_var_t e_n(name_t::view);
+         any_var_t e_n(ns::view);
 
          // Verifying the same get_type should not reset the value.
          e_u.reset();
@@ -745,7 +745,7 @@ namespace tests
          Assert::AreEqual<double>(8.0, e_r2);
          Assert::AreEqual<array_t>(a, e_a);
          Assert::AreEqual<dict_t>(d, e_d);
-         Assert::AreEqual<name_t>(name_t::view, e_n);
+         Assert::AreEqual<name_t>(ns::view, e_n);
       }
 
       TEST_METHOD(element_int64_operators)
@@ -899,9 +899,9 @@ namespace tests
          Assert::AreEqual<bool>(false, e_n);
 
          dict_t d;
-         d[name_t::view] = 33;
-         d[name_t::vector] = 4;
-         d[name_t::matrix] = 5;
+         d[ns::view] = 33;
+         d[ns::vector] = 4;
+         d[ns::matrix] = 5;
 
          array_t a;
          a.grow() = 55;
@@ -924,7 +924,7 @@ namespace tests
          e_r2 = 8.0;
          e_a = a;
          e_d = d;
-         e_n = name_t::view;
+         e_n = ns::view;
 
          Assert::AreEqual<bool>(false, e_u);
          Assert::AreEqual<bool>(true, e_t1);
@@ -974,24 +974,24 @@ namespace tests
       TEST_METHOD(element_dict)
       {
          dict_t d;
-         d[name_t::view] = 33.;
-         d[name_t::vector] = 4;
-         d[name_t::matrix] = 5.f;
+         d[ns::view] = 33.;
+         d[ns::vector] = 4;
+         d[ns::matrix] = 5.f;
 
          any_var_t e;
 
          //e[voc::age] = 55.;
          //e.append(d);
-         //e.erase(name_t::view);
-         //e.erase(name_t::vector);
+         //e.erase(ns::view);
+         //e.erase(ns::vector);
 
-         //Assert::IsFalse(e.contains(name_t::vector));
-         //Assert::IsTrue(e.contains(name_t::matrix));
+         //Assert::IsFalse(e.contains(ns::vector));
+         //Assert::IsTrue(e.contains(ns::matrix));
          //Assert::IsTrue(e.contains(voc::age));
-         //Assert::IsFalse(e.contains(name_t::view));
+         //Assert::IsFalse(e.contains(ns::view));
 
          //Assert::AreEqual<index_t>(2, e.size());
-         //Assert::AreEqual<float>(5.f, e[name_t::matrix]);
+         //Assert::AreEqual<float>(5.f, e[ns::matrix]);
          //Assert::AreEqual<double>(55., e[voc::age]);
       }
    };

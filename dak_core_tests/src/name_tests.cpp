@@ -14,14 +14,16 @@ namespace tests
 	public:
 		TEST_METHOD(name_base)
 		{
-         name_t n = name_t::key;
+         initialize_names();
+
+         name_t n = ns::key;
 
          // Root is valid.
-         Assert::IsTrue(n != name_t::invalid);
+         Assert::IsTrue(n != name_t());
 
          // Note: two roots are not equal.
          Assert::AreNotEqual(n, name_t());
-         Assert::AreNotEqual(n, (const name_t&)name_t::rect);
+         Assert::AreNotEqual(n, (const name_t&)ns::rect);
 
          // Note: two roots are not equal.
          Assert::IsFalse(n == name_t());
@@ -33,27 +35,29 @@ namespace tests
          //Assert::IsFalse(n >  name_t());
          //Assert::IsTrue( n >= name_t());
 
-         Assert::IsFalse(n == name_t::rect);
-         Assert::IsTrue( n != name_t::rect);
+         Assert::IsFalse(n == ns::rect);
+         Assert::IsTrue( n != ns::rect);
       }
 
       TEST_METHOD(name_derived)
       {
-         name_t r(name_t::rect);
+         initialize_names();
 
-         Assert::IsTrue(r != name_t::invalid);
+         name_t r(ns::rect);
+
+         Assert::IsTrue(r != name_t());
 
          Assert::AreNotEqual((const name_t&)r, name_t());
-         Assert::AreEqual(r, name_t::rect);
+         Assert::AreEqual(r, ns::rect);
 
-         Assert::IsTrue( r == name_t::rect);
-         Assert::IsFalse(r != name_t::rect);
+         Assert::IsTrue( r == ns::rect);
+         Assert::IsFalse(r != ns::rect);
 
          // We cannot predict the address the sub-names will be.
-         //Assert::IsFalse(r < name_t::rect);
-         //Assert::IsTrue( r <= name_t::rect);
-         //Assert::IsFalse(r > name_t::rect);
-         //Assert::IsTrue( r >= name_t::rect);
+         //Assert::IsFalse(r < ns::rect);
+         //Assert::IsTrue( r <= ns::rect);
+         //Assert::IsFalse(r > ns::rect);
+         //Assert::IsTrue( r >= ns::rect);
 
          Assert::IsFalse(r == name_t());
          Assert::IsTrue(r != name_t());

@@ -14,11 +14,13 @@ namespace tests
 	public:
 		TEST_METHOD(stream_base)
 		{
+         initialize_names();
+
          wstringstream ss;
 
          ss.clear();
          ss.str(L"");
-         ss << name_t::point;
+         ss << ns::point;
          Assert::AreEqual(text_t(L"point"), ss.str());
 
          ss.clear();
@@ -30,7 +32,7 @@ namespace tests
          ss.clear();
          ss.str(L"");
          dict_t d2;
-         d2[name_t::point] = 3;
+         d2[ns::point] = 3;
          ss << d2;
          Assert::AreEqual(text_t(L"{ point : 3 , }"), ss.str());
 

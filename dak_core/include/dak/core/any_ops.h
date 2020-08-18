@@ -16,6 +16,9 @@
 
 namespace dak_ns::core_ns
 {
+   // TODO: allow additional arguments to the operators.
+   //       In fact, separating selection types from arguments types would be best.
+
    //////////////////////////////////////////////////////////////////////////
    //
    // Familiy of unary operations.
@@ -124,7 +127,7 @@ namespace dak_ns::core_ns
          return std::any(a_func(std::any_cast<A>(arg_a)));
       });
 
-      unary_ops_t<OP>::register_op(op);
+      unary_ops_t<OP>::register_op<A>(op);
    }
 
    //////////////////////////////////////////////////////////////////////////
@@ -306,6 +309,29 @@ namespace dak_ns::core_ns
    // two would be converted in C++. For example: int + double -> double.
 
    struct dominant_op_t : binary_op_t<dominant_op_t> { };
+
+   //////////////////////////////////////////////////////////////////////////
+   //
+   // The to-text operation returns a textual representation of the type.
+
+   struct to_text_op_t : unary_op_t<to_text_op_t>
+   {
+      static text_t call(const std::any& arg_a)
+      {
+         std::any result = unary_ops_t<to_text_op_t>::call(arg_a);
+         if (result.has_value())
+            return std::any_cast<text_t>(result);
+         else
+            return {};
+      }
+
+      template<class A>
+      static text_t call(const A& arg_a)
+      {
+         return to_text_op_t::call(std::make_any<A>());
+      }
+
+   };
 
    void initialize_ops();
 }
