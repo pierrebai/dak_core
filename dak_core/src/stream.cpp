@@ -2,7 +2,7 @@
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
-#include <dak/core/any_ops.h>
+#include <dak/core/any_to_text_op.h>
 #include <dak/core/stream.h>
 #include <dak/core/types.h>
 #include <dak/core/dict.h>

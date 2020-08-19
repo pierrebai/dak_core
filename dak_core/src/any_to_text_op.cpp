@@ -2,7 +2,7 @@
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
-#include <dak/core/any_ops.h>
+#include <dak/core/any_to_text_op.h>
 #include <dak/core/name.h>
 #include <dak/core/array.h>
 #include <dak/core/dict.h>
@@ -46,7 +46,7 @@ namespace dak_ns::core_ns
       to_text_op_init_t to_text_op_init;
    }
 
-   void initialize_to_text_ops()
+   void to_text_op_t::register_ops()
    {
       // Needed so that the global operations are initialized in the tests.
       // All that is needed is to enter this file to create the globals.

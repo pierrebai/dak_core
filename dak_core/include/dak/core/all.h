@@ -8,6 +8,10 @@
 #define DAK_CORE_ALL_H
 
 #include <dak/core/types.h>
+#include <dak/core/any_ops.h>
+#include <dak/core/any_convert_op.h>
+#include <dak/core/any_is_compatible_op.h>
+#include <dak/core/any_to_text_op.h>
 #include <dak/core/ref_counted.h>
 #include <dak/core/ref.h>
 #include <dak/core/name.h>

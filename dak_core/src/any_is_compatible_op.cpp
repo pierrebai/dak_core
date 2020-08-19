@@ -2,7 +2,7 @@
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
-#include <dak/core/any_ops.h>
+#include <dak/core/any_is_compatible_op.h>
 #include <dak/core/name.h>
 #include <dak/core/array.h>
 #include <dak/core/dict.h>
@@ -191,7 +191,7 @@ namespace dak_ns::core_ns
       is_compatible_op_init_t is_compatible_op_init;
    }
 
-   void initialize_is_compatible_ops()
+   void is_compatible_op_t::register_ops()
    {
       // Needed so that the global operations are initialized in the tests.
       // All that is needed is to enter this file to create the globals.

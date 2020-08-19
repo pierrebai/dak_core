@@ -2,23 +2,17 @@
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
-#include <dak/core/any_ops.h>
-#include <dak/core/name.h>
-#include <dak/core/array.h>
-#include <dak/core/dict.h>
+#include <dak/core/any_convert_op.h>
+#include <dak/core/any_is_compatible_op.h>
+#include <dak/core/any_to_text_op.h>
 
 namespace dak_ns::core_ns
 {
-   void initialize_convert_ops();
-   void initialize_is_compatible_ops();
-   void initialize_to_text_ops();
-
    void initialize_ops()
    {
       // Needed so that the global operations are initialized in the tests.
-      // All that is needed is to enter this file to create the globals.
-      initialize_convert_ops();
-      initialize_is_compatible_ops();
-      initialize_to_text_ops();
+      convert_op_t::register_ops();
+      is_compatible_op_t::register_ops();
+      to_text_op_t::register_ops();
    }
 }
