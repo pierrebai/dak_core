@@ -182,7 +182,9 @@ namespace dak_ns::core_ns
 
             make_binary_op<bool, array_t, array_t, is_compatible_op_t>([](const array_t& arg_a, const array_t& arg_b) -> bool { return true; });
             make_binary_op<bool, dict_t, dict_t, is_compatible_op_t>([](const dict_t& arg_a, const dict_t& arg_b) -> bool { return true; });
-            make_binary_op<bool, name_t, name_t, is_compatible_op_t>([](const name_t& arg_a, const name_t& arg_b) -> bool{ return true; });
+            make_binary_op<bool, name_t, name_t, is_compatible_op_t>([](const name_t& arg_a, const name_t& arg_b) -> bool { return true; });
+
+            make_binary_op<bool, array_t, dict_t, is_compatible_op_t>([](const array_t& arg_a, const dict_t& arg_b) -> bool { return true; });
          }
       };
 

@@ -183,6 +183,15 @@ namespace dak_ns::core_ns
             make_binary_op<array_t, array_t, array_t, convert_op_t>([](const array_t& arg_a, const array_t& arg_b) -> array_t { return arg_b; });
             make_binary_op<dict_t, dict_t, dict_t, convert_op_t>([](const dict_t& arg_a, const dict_t& arg_b) -> dict_t { return arg_b; });
             make_binary_op<name_t, name_t, name_t, convert_op_t>([](const name_t& arg_a, const name_t& arg_b) -> name_t { return arg_b; });
+
+            make_binary_op<array_t, array_t, dict_t, convert_op_t>([](const array_t& arg_a, const dict_t& arg_b) -> array_t
+            {
+               array_t result;
+               result.reserve(arg_b.size());
+               for (const auto& key_value : arg_b)
+                  result.grow() = key_value;
+               return result;
+            });
          }
       };
 

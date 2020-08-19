@@ -74,8 +74,16 @@ namespace dak_ns::core_ns
       name_t get_name() const { return N; }
 
       // Access.
-      bool set_any(std::any& a_value) override;
-      std::any get_any() const override;
+      bool set_any(std::any& a_value) override
+      {
+         std::any t_value = convert_op_t::call<T>(a_value);
+         if (!t_value.has_value())
+            return false;
+         my_value = std::any_cast<T>(&t_value);
+         return true;
+      }
+
+      std::any get_any() const override { return my_value; }
 
       operator T& () { return my_value; }
       operator const T& () const { return my_value; }
@@ -92,7 +100,6 @@ namespace dak_ns::core_ns
 
    private:
       T my_value;
-      std::any my_any;
    };
 
    //////////////////////////////////////////////////////////////////////////
@@ -220,7 +227,7 @@ namespace dak_ns::core_ns
    {
       if (auto mem_var = dynamic_cast<member_var_t<T>*>(&a_var))
       {
-         return mem_var->as<T>();
+         return mem_var->as();
       }
       if (auto any_var = dynamic_cast<any_var_t*>(&a_var))
       {
@@ -233,7 +240,7 @@ namespace dak_ns::core_ns
    {
       if (auto mem_var = dynamic_cast<member_var_t<T> *>(&a_var))
       {
-         return mem_var->as<T>();
+         return mem_var->as();
       }
       if (auto any_var = dynamic_cast<any_var_t *>(&a_var))
       {

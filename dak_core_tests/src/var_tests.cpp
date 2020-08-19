@@ -410,7 +410,7 @@ namespace tests
          Assert::IsTrue(e_r1.compatible<int64_t>());
          Assert::IsFalse(e_r2.compatible<name_t>());
          Assert::IsFalse(e_a.compatible<dict_t>());
-         Assert::IsFalse(e_d.compatible<array_t>());
+         Assert::IsTrue(e_d.compatible<array_t>());
          Assert::IsFalse(e_n.compatible<int64_t>());
       }
 

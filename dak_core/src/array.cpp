@@ -29,6 +29,11 @@ namespace dak_ns::core_ns
       return my_elements.size();
    }
 
+   void array_t::reserve(index_t a_size)
+   {
+      my_elements.reserve(a_size);
+   }
+
    void array_t::append(const array_t & an_array)
    {
       for (const any_var_t& e : an_array)

@@ -43,6 +43,7 @@ namespace dak_ns::core_ns
 
       // Number of elements in the array.
       index_t size() const;
+      void reserve(index_t a_size);
 
       // Modifications to the array.
       void append(const array_t &);
