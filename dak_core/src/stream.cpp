@@ -2,9 +2,9 @@
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
-#include <dak/core/any_to_text_op.h>
+#include <dak/core/any_stream_op.h>
 #include <dak/core/stream.h>
-#include <dak/core/types.h>
+#include <dak/core/name.h>
 #include <dak/core/dict.h>
 #include <dak/core/array.h>
 
@@ -22,8 +22,7 @@ namespace dak_ns::core_ns
 
    std::wostream& operator <<(std::wostream& o, const var_t& a_var)
    {
-      o << to_text_op_t::call(a_var.get_any());
-      return o;
+      return o << a_var.get_any();
    }
 
    std::wostream& operator <<(std::wostream& o, const array_t& an_array)

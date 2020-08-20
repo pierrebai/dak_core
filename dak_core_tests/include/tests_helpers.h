@@ -57,6 +57,12 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
       RETURN_WIDE_STRING(a_var);
    }
 
+   template<> inline std::wstring ToString<std::any>(const std::any& a_var)
+   {
+      using namespace dak_ns::core_ns;
+      RETURN_WIDE_STRING(a_var);
+   }
+
 }
 
 #endif /* DAK_CORE_TESTS_HELPERS_H */

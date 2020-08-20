@@ -11,6 +11,7 @@
 #include <dak/core/types.h>
 
 #include <iostream>
+#include <any>
 
 namespace dak_ns::core_ns
 {
@@ -24,6 +25,7 @@ namespace dak_ns::core_ns
    std::wostream& operator <<(std::wostream& o, const var_t& a_var);
    std::wostream& operator <<(std::wostream& o, const array_t& an_array);
    std::wostream& operator <<(std::wostream& o, const dict_t& a_dict);
+   std::wostream& operator <<(std::wostream& o, const std::any& a_var);
 }
 
 #endif /* DAK_CORE_STREAM_H */

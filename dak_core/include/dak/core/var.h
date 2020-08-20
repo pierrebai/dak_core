@@ -33,18 +33,18 @@ namespace dak_ns::core_ns
       virtual const std::type_info& get_type() const = 0;
 
       // Comparisons.
-      int32_t compare(const var_t& an_other) const;
+      comparison_t compare(const var_t& an_other) const;
 
-      bool operator == (const var_t& an_other) const { return compare(an_other) == 0; }
-      bool operator != (const var_t& an_other) const { return compare(an_other) != 0; }
-      bool operator < (const var_t& an_other) const { return compare(an_other) < 0; }
-      bool operator > (const var_t& an_other) const { return compare(an_other) > 0; }
-      bool operator <= (const var_t& an_other) const { return compare(an_other) <= 0; }
-      bool operator >= (const var_t& an_other) const { return compare(an_other) >= 0; }
+      bool operator == (const var_t& an_other) const { return compare(an_other) == comparison_t::equal; }
+      bool operator != (const var_t& an_other) const { return compare(an_other) != comparison_t::equal; }
+      bool operator < (const var_t& an_other) const { return compare(an_other) == comparison_t::less; }
+      bool operator > (const var_t& an_other) const { return compare(an_other) == comparison_t::more; }
+      bool operator <= (const var_t& an_other) const { return is(compare(an_other), comparison_t::less_or_equal); }
+      bool operator >= (const var_t& an_other) const { return is(compare(an_other), comparison_t::more_or_equal); }
 
    private:
       // Comparisons.
-      virtual int32_t compare_same_type(const var_t& an_other) const = 0;
+      virtual comparison_t compare_same_type(const var_t& an_other) const = 0;
    };
 
    //////////////////////////////////////////////////////////////////////////
@@ -95,9 +95,16 @@ namespace dak_ns::core_ns
 
    private:
       // Comparisons.
-      int32_t compare_same_type(const var_t& an_other) const override
+      comparison_t compare_same_type(const var_t& an_other) const override
       {
          const T other_value& as<T>(an_other);
+         if (my_value < other_value)
+            return comparison_t::less;
+         if (my_value > other_value)
+            return comparison_t::more;
+         if (my_value == other.value)
+            return comparison_t::equal;
+         return comparison_t::incomparable;
       }
 
    private:
@@ -229,7 +236,7 @@ namespace dak_ns::core_ns
 
    private:
       // Comparisons.
-      int32_t compare_same_type(const var_t& an_other) const override;
+      comparison_t compare_same_type(const var_t& an_other) const override;
 
       template <class T>
       const T my_as() const

@@ -37,6 +37,29 @@ namespace dak_ns::core_ns
 
    //////////////////////////////////////////////////////////////////////////
    //
+   // Comparison possible results.
+   //
+   // Note: incomparable should result in operator== returning false,
+   //       operator!= returning true, and all relative operators
+   //       (<, >, <=, >=) returning false.
+
+   enum class comparison_t : int8_t
+   {
+      incomparable = 0,
+      equal = 1,
+      less = 2,
+      more = 4,
+      less_or_equal = less | equal,
+      more_or_equal = more | equal,
+   };
+
+   inline bool is(const comparison_t result, const comparison_t desired)
+   {
+      return 0 != (uint8_t(result) & uint8_t(desired));
+   }
+
+   //////////////////////////////////////////////////////////////////////////
+   //
    // Forward declare some types defined elesewhere.
 
    struct array_t;

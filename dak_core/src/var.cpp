@@ -18,15 +18,15 @@ namespace dak_ns::core_ns
    //
    // Comparisons.
 
-   static int32_t compare_types(const std::type_info& a_type, const std::type_info& other_type)
+   static comparison_t compare_types(const std::type_info& a_type, const std::type_info& other_type)
    {
       if (std::type_index(a_type) < std::type_index(other_type))
-         return -1;
+         return comparison_t::less;
       else
-         return 1;
+         return comparison_t::more;
    }
 
-   int32_t var_t::compare(const var_t& an_other) const
+   comparison_t var_t::compare(const var_t& an_other) const
    {
       const std::type_info& my_type = get_type();
       const std::type_info& other_type = an_other.get_type();
@@ -36,7 +36,7 @@ namespace dak_ns::core_ns
          return compare_same_type(an_other);
    }
 
-   int32_t any_var_t::compare_same_type(const var_t& an_other) const
+   comparison_t any_var_t::compare_same_type(const var_t& an_other) const
    {
       // TODO: optimize with any_var_t to use as_any() instead to avoid copy.
       return compare_op_t::call(get_any(), an_other.get_any());
