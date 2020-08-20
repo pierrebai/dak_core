@@ -4,6 +4,7 @@ add_library(dak_core
    include/dak/core/any_ops.h                   src/any_ops.cpp
    include/dak/core/any_convert_op.h            src/any_convert_op.cpp
    include/dak/core/any_is_compatible_op.h      src/any_is_compatible_op.cpp
+   include/dak/core/any_stream_op.h             src/any_stream_op.cpp
    include/dak/core/any_to_text_op.h            src/any_to_text_op.cpp
    include/dak/core/array.h                     src/array.cpp
    include/dak/core/dict.h                      src/dict.cpp
