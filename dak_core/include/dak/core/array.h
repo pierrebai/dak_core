@@ -47,6 +47,7 @@ namespace dak_ns::core_ns
 
       // Modifications to the array.
       void append(const array_t &);
+      void append(const any_var_t&);
       bool erase(index_t an_index);
       any_var_t& insert(index_t an_index);
       any_var_t& grow();

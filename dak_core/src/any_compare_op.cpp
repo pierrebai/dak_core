@@ -13,7 +13,7 @@ namespace dak_ns::core_ns
 {
    //////////////////////////////////////////////////////////////////////////
    //
-   // Conversion from a type to another.
+   // Compare two values.
 
    namespace
    {

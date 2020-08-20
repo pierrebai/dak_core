@@ -40,8 +40,13 @@ namespace dak_ns::core_ns
    {
       for (const any_var_t& e : an_array)
       {
-         grow() = e;
+         append(e);
       }
+   }
+
+   void array_t::append(const any_var_t& a_value)
+   {
+      my_elements.emplace_back(a_value);
    }
 
    index_t array_t::make_fit(index_t index_t)

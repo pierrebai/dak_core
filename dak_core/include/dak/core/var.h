@@ -168,23 +168,24 @@ namespace dak_ns::core_ns
       // Clear the old data and set the type. Clear even if same type.
       // Returns true if the type was successfully set.
       template <class T>
-      bool reset(const T& a_value) { my_value = a_value; return true; }
+      any_var_t& reset(const T& a_value) { my_value = a_value; return *this; }
 
-      bool reset(str_ptr_t a_value) { my_value = text_t(a_value ? a_value : L""); return true; }
+      any_var_t& reset(str_ptr_t a_value) { my_value = text_t(a_value ? a_value : L""); return *this; }
 
       template <class T>
-      bool reset() { my_value = T{}; return true; }
+      any_var_t& reset() { my_value = T{}; return *this; }
 
-      bool reset() { my_value.reset(); return true; }
+      any_var_t& reset() { my_value.reset(); return *this; }
 
       // Reset if currently not the requested type.
       // Tries to preserve as much of the old value as possible.
       // Returns true if the type was successfully set.
       template <class T>
-      bool ensure()
+      any_var_t& ensure()
       {
          if (my_value.type() == typeid(T))
-            return true;
+            return *this;
+
          const T new_value(convert_op_t::call<T>(my_value));
          return reset<T>(new_value);
       }
@@ -197,12 +198,34 @@ namespace dak_ns::core_ns
       {
          if (my_value.type() == typeid(T))
             return true;
+
          if (!my_value.has_value())
-            return const_cast<any_var_t&>(*this).reset<T>();
+         {
+            const_cast<any_var_t&>(*this).reset<T>();
+            return true;
+         }
+
          return false;
       }
 
-      // TODO: provide array and dict operators.
+      // Array conversion + immediate array operation.
+      any_var_t& operator [](index_t anIndex);
+      const any_var_t& operator [](index_t anIndex) const;
+      bool erase(index_t anIndex);
+      void append(const array_t&);
+      void append(const any_var_t&);
+      any_var_t& insert(index_t anIndex);
+      any_var_t& grow();
+
+      // Dict conversion + immediate dict operation.
+      void append(const dict_t&);
+      bool erase(const name_t&);
+      bool contains(const name_t&) const;
+      any_var_t& operator [](const name_t&);
+      const any_var_t& operator [](const name_t&) const;
+
+      // Array, dict and text return the length, others return zero.
+      index_t size() const;
 
    private:
       // Comparisons.

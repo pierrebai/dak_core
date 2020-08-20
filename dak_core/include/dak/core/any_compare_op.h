@@ -7,14 +7,17 @@
 
 #include <dak/core/any_ops.h>
 
+#include <exception>
+
 namespace dak_ns::core_ns
 {
 
    //////////////////////////////////////////////////////////////////////////
    //
    // The compare operation writes the value to an output compare.
-   //
-   // Note: the compare is received by pointer to travel in a std::any.
+   // 
+   // Note: throws std::bad_function_call if the comparison implementation
+   //       fails to return a int32_t.
 
    struct compare_op_t : binary_op_t<compare_op_t>
    {
@@ -32,8 +35,8 @@ namespace dak_ns::core_ns
          const std::any result = binary_ops_t<compare_op_t>::call(arg_a, arg_b);
          if (result.has_value())
             return std::any_cast<int32_t>(result);
-         else
-            return 1; // TODO: maybe should throw?
+
+         throw std::bad_function_call();
       }
 
       template<class A>

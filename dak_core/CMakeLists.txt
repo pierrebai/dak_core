@@ -5,6 +5,7 @@ add_library(dak_core
    include/dak/core/any_compare_op.h            src/any_compare_op.cpp
    include/dak/core/any_convert_op.h            src/any_convert_op.cpp
    include/dak/core/any_is_compatible_op.h      src/any_is_compatible_op.cpp
+   include/dak/core/any_size_op.h               src/any_size_op.cpp
    include/dak/core/any_stream_op.h             src/any_stream_op.cpp
    include/dak/core/any_to_text_op.h            src/any_to_text_op.cpp
    include/dak/core/array.h                     src/array.cpp

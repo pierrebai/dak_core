@@ -11,6 +11,7 @@
 #include <dak/core/any_ops.h>
 #include <dak/core/any_convert_op.h>
 #include <dak/core/any_is_compatible_op.h>
+#include <dak/core/any_size_op.h>
 #include <dak/core/any_stream_op.h>
 #include <dak/core/any_to_text_op.h>
 #include <dak/core/ref_counted.h>

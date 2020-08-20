@@ -12,7 +12,7 @@ namespace dak_ns::core_ns
 {
    //////////////////////////////////////////////////////////////////////////
    //
-   // Conversion from a type to another.
+   // Write to an output text stream.
 
    namespace
    {

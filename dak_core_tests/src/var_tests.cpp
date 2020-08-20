@@ -307,7 +307,7 @@ namespace tests
 
          const any_var_t e_u;
          const any_var_t e_t1(text_t(L"text_t"));
-         const any_var_t e_t2(L"strptr");
+         const any_var_t e_t2(L"str_ptr_t");
          const any_var_t e_c1('c');
          const any_var_t e_c2(L'w');
          const any_var_t e_b(true);
@@ -323,23 +323,23 @@ namespace tests
          const any_var_t e_d(d);
          const any_var_t e_n(ns::view);
 
-         //Assert::AreEqual<index_t>(0, e_u.size());
-         //Assert::AreEqual<index_t>(4, e_t1.size());
-         //Assert::AreEqual<index_t>(6, e_t2.size());
-         //Assert::AreEqual<index_t>(0, e_c1.size());
-         //Assert::AreEqual<index_t>(0, e_c2.size());
-         //Assert::AreEqual<index_t>(0, e_b.size());
-         //Assert::AreEqual<index_t>(0, e_i2.size());
-         //Assert::AreEqual<index_t>(0, e_i1.size());
-         //Assert::AreEqual<index_t>(0, e_i3.size());
-         //Assert::AreEqual<index_t>(0, e_u1.size());
-         //Assert::AreEqual<index_t>(0, e_u2.size());
-         //Assert::AreEqual<index_t>(0, e_u3.size());
-         //Assert::AreEqual<index_t>(0, e_r1.size());
-         //Assert::AreEqual<index_t>(0, e_r2.size());
-         //Assert::AreEqual<index_t>(3, e_a.size());
-         //Assert::AreEqual<index_t>(3, e_d.size());
-         //Assert::AreEqual<index_t>(0, e_n.size());
+         Assert::AreEqual<index_t>(0, e_u.size());
+         Assert::AreEqual<index_t>(6, e_t1.size());
+         Assert::AreEqual<index_t>(9, e_t2.size());
+         Assert::AreEqual<index_t>(0, e_c1.size());
+         Assert::AreEqual<index_t>(0, e_c2.size());
+         Assert::AreEqual<index_t>(0, e_b.size());
+         Assert::AreEqual<index_t>(0, e_i2.size());
+         Assert::AreEqual<index_t>(0, e_i1.size());
+         Assert::AreEqual<index_t>(0, e_i3.size());
+         Assert::AreEqual<index_t>(0, e_u1.size());
+         Assert::AreEqual<index_t>(0, e_u2.size());
+         Assert::AreEqual<index_t>(0, e_u3.size());
+         Assert::AreEqual<index_t>(0, e_r1.size());
+         Assert::AreEqual<index_t>(0, e_r2.size());
+         Assert::AreEqual<index_t>(3, e_a.size());
+         Assert::AreEqual<index_t>(3, e_d.size());
+         Assert::AreEqual<index_t>(0, e_n.size());
       }
 
       TEST_METHOD(element_compatible)
@@ -954,21 +954,21 @@ namespace tests
 
          any_var_t e;
 
-         //e.grow() = 11;
-         //e.grow() = 22;
+         e.grow() = 11;
+         e.grow() = 22;
 
-         //e.insert(0) = 33;
+         e.insert(0) = 33;
 
-         //e.erase(1);
+         e.erase(1);
 
-         //e.append(a);
+         e.append(a);
 
-         //Assert::AreEqual<index_t>(5, e.size());
-         //Assert::AreEqual<int32_t>(33, e[0]);
-         //Assert::AreEqual<int32_t>(22, e[1]);
-         //Assert::AreEqual<int32_t>(55, e[2]);
-         //Assert::AreEqual<double>(66., e[3]);
-         //Assert::AreEqual<float>(77.f, e[4]);
+         Assert::AreEqual<index_t>(5, e.size());
+         Assert::AreEqual<int32_t>(33, e[0]);
+         Assert::AreEqual<int32_t>(22, e[1]);
+         Assert::AreEqual<int32_t>(55, e[2]);
+         Assert::AreEqual<double>(66., e[3]);
+         Assert::AreEqual<float>(77.f, e[4]);
       }
 
       TEST_METHOD(element_dict)
@@ -980,19 +980,19 @@ namespace tests
 
          any_var_t e;
 
-         //e[voc::age] = 55.;
-         //e.append(d);
-         //e.erase(ns::view);
-         //e.erase(ns::vector);
+         e[ns::point] = 55.;
+         e.append(d);
+         e.erase(ns::view);
+         e.erase(ns::vector);
 
-         //Assert::IsFalse(e.contains(ns::vector));
-         //Assert::IsTrue(e.contains(ns::matrix));
-         //Assert::IsTrue(e.contains(voc::age));
-         //Assert::IsFalse(e.contains(ns::view));
+         Assert::IsFalse(e.contains(ns::vector));
+         Assert::IsTrue(e.contains(ns::matrix));
+         Assert::IsTrue(e.contains(ns::point));
+         Assert::IsFalse(e.contains(ns::view));
 
-         //Assert::AreEqual<index_t>(2, e.size());
-         //Assert::AreEqual<float>(5.f, e[ns::matrix]);
-         //Assert::AreEqual<double>(55., e[voc::age]);
+         Assert::AreEqual<index_t>(2, e.size());
+         Assert::AreEqual<float>(5.f, e[ns::matrix]);
+         Assert::AreEqual<double>(55., e[ns::point]);
       }
    };
 }

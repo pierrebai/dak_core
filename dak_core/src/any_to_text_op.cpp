@@ -1,4 +1,4 @@
-// File: dak/any_ops.cpp
+// File: dak/any_to_text_op.cpp
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
@@ -14,7 +14,7 @@ namespace dak_ns::core_ns
 {
    //////////////////////////////////////////////////////////////////////////
    //
-   // Conversion from a type to another.
+   // Conversion to text.
 
    namespace
    {
