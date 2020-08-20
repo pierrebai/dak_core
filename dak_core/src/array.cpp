@@ -4,6 +4,8 @@
 
 #include <dak/core/array.h>
 
+#include <algorithm>
+
 namespace dak_ns::core_ns
 {
    const array_t array_t::empty;
@@ -147,8 +149,21 @@ namespace dak_ns::core_ns
       return true;
    }
 
-   bool array_t::operator != (const array_t& an_array) const
+   bool array_t::operator < (const array_t& an_array) const
    {
-      return !((*this) == an_array);
+      const index_t min_size = std::min(size(), an_array.size());
+      for (index_t i = 0; i < min_size; ++i)
+      {
+         if (my_elements[i] < an_array.my_elements[i])
+            return true;
+         if (an_array.my_elements[i] < my_elements[i])
+            return false;
+      }
+
+      if (size() >= an_array.size())
+         return false;
+
+      return true;
    }
+
 }

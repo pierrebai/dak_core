@@ -18,7 +18,7 @@ namespace dak_ns::core_ns
    {
       static text_t call(const std::any& arg_a)
       {
-         std::any result = unary_ops_t<to_text_op_t>::call(arg_a);
+         const std::any result = unary_ops_t<to_text_op_t>::call(arg_a);
          if (result.has_value())
             return std::any_cast<text_t>(result);
          else

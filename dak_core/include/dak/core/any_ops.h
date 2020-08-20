@@ -95,6 +95,14 @@ namespace dak_ns::core_ns
       using args_t = std::type_index;
       using op_t = unary_op_t<OP>;
 
+      template <class A>
+      static void register_op(const op_t& an_op)
+      {
+         auto& ops = get_ops();
+         ops[args_t(std::type_index(typeid(A)))] = an_op;
+      }
+
+   private:
       static std::any call(const std::any& arg_a)
       {
          const auto& ops = get_ops();
@@ -104,19 +112,13 @@ namespace dak_ns::core_ns
          return pos->second.my_op(arg_a);
       }
 
-      template <class A>
-      static void register_op(const op_t& an_op)
-      {
-         auto& ops = get_ops();
-         ops[args_t(std::type_index(typeid(A)))] = an_op;
-      }
-
-   private:
       static std::map<args_t, op_t>& get_ops()
       {
          static std::map<args_t, op_t> ops;
          return ops;
       }
+
+      friend OP;
    };
 
    template <class RET, class A, class OP>
@@ -207,6 +209,14 @@ namespace dak_ns::core_ns
       using args_t = std::pair<std::type_index, std::type_index>;
       using op_t = binary_op_t<OP>;
 
+      template <class A, class B>
+      static void register_op(const op_t& an_op)
+      {
+         auto& ops = get_ops();
+         ops[args_t(std::type_index(typeid(A)), std::type_index(typeid(B)))] = an_op;
+      }
+
+   private:
       static std::any call(const std::any& arg_a, const std::any& arg_b)
       {
          const auto& ops = get_ops();
@@ -216,25 +226,13 @@ namespace dak_ns::core_ns
          return pos->second.my_op(arg_a, arg_b);
       }
 
-      template<class A, class B>
-      static std::any call(const A& arg_a, const B& arg_b)
-      {
-         return call(std::any(arg_a), std::any(arg_b));
-      }
-
-      template <class A, class B>
-      static void register_op(const op_t& an_op)
-      {
-         auto& ops = get_ops();
-         ops[args_t(std::type_index(typeid(A)), std::type_index(typeid(B)))] = an_op;
-      }
-
-   private:
       static std::map<args_t, op_t>& get_ops()
       {
          static std::map<args_t, op_t> ops;
          return ops;
       }
+
+      friend OP;
    };
 
    template <class RET, class A, class B, class OP>

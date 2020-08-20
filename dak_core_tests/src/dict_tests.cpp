@@ -1,6 +1,7 @@
 #include <CppUnitTest.h>
 
 #include <dak/core/dict.h>
+#include <dak/core/any_compare_op.h>
 #include <tests_helpers.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -103,5 +104,56 @@ namespace tests
 
          Assert::AreEqual(4, count);
       }
+
+      TEST_METHOD(dict_compare)
+      {
+         compare_op_t::register_ops();
+
+         dict_t d_empty;
+         dict_t d_small1;
+         dict_t d_small2;
+         dict_t d_big1;
+         dict_t d_big2;
+
+         d_small1[ns::a] = 2;
+
+         d_small2[ns::b] = 3;
+
+         d_big1[ns::b] = 4;
+
+         d_big2[ns::b] = 4;
+         d_big2[ns::c] = 4;
+
+         Assert::IsFalse(d_empty < d_empty);
+         Assert::IsTrue(d_empty < d_small1);
+         Assert::IsTrue(d_empty < d_small2);
+         Assert::IsTrue(d_empty < d_big1);
+         Assert::IsTrue(d_empty < d_big2);
+
+         Assert::IsFalse(d_small1 < d_empty);
+         Assert::IsFalse(d_small1 < d_small1);
+         Assert::IsTrue(d_small1 < d_small2);
+         Assert::IsTrue(d_small1 < d_big1);
+         Assert::IsTrue(d_small1 < d_big2);
+
+         Assert::IsFalse(d_small2 < d_empty);
+         Assert::IsFalse(d_small2 < d_small1);
+         Assert::IsFalse(d_small2 < d_small2);
+         Assert::IsTrue(d_small2 < d_big1);
+         Assert::IsTrue(d_small2 < d_big2);
+
+         Assert::IsFalse(d_big1 < d_empty);
+         Assert::IsFalse(d_big1 < d_small1);
+         Assert::IsFalse(d_big1 < d_small2);
+         Assert::IsFalse(d_big1 < d_big1);
+         Assert::IsTrue(d_big1 < d_big2);
+
+         Assert::IsFalse(d_big2 < d_empty);
+         Assert::IsFalse(d_big2 < d_small1);
+         Assert::IsFalse(d_big2 < d_small2);
+         Assert::IsFalse(d_big2 < d_big1);
+         Assert::IsFalse(d_big2 < d_big2);
+      }
+
    };
 }

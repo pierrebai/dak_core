@@ -2,6 +2,7 @@
 add_library(dak_core
    include/dak/core/all.h
    include/dak/core/any_ops.h                   src/any_ops.cpp
+   include/dak/core/any_compare_op.h            src/any_compare_op.cpp
    include/dak/core/any_convert_op.h            src/any_convert_op.cpp
    include/dak/core/any_is_compatible_op.h      src/any_is_compatible_op.cpp
    include/dak/core/any_stream_op.h             src/any_stream_op.cpp

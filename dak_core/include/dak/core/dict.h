@@ -55,7 +55,9 @@ namespace dak_ns::core_ns
 
       // Comparisons.
       bool operator == (const dict_t& an_other) const;
-      bool operator != (const dict_t& an_other) const;
+      bool operator != (const dict_t& an_other) const { return !((*this) == an_other); }
+      bool operator <  (const dict_t& an_other) const;
+      bool operator >  (const dict_t& an_other) const { return an_other < *this; }
 
    protected:
       elements_t my_elements;

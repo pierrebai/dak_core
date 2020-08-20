@@ -8,8 +8,6 @@
 #include <dak/core/dict.h>
 #include <dak/core/stream.h>
 
-#include <sstream>
-
 namespace dak_ns::core_ns
 {
    //////////////////////////////////////////////////////////////////////////

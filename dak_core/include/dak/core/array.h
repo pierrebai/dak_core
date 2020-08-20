@@ -62,8 +62,10 @@ namespace dak_ns::core_ns
       const_iterator end() const;
 
       // Comparisons.
-      bool operator == (const array_t&) const;
-      bool operator != (const array_t&) const;
+      bool operator == (const array_t& an_other) const;
+      bool operator != (const array_t& an_other) const { return !((*this) == an_other); }
+      bool operator <  (const array_t& an_other) const;
+      bool operator >  (const array_t& an_other) const { return an_other < *this; }
 
    private:
       // Make the given index positive, possibly by resizing the array.

@@ -91,9 +91,28 @@ namespace dak_ns::core_ns
       return true;
    }
 
-   bool dict_t::operator != (const dict_t& an_other) const
+   bool dict_t::operator < (const dict_t& an_other) const
    {
-      return !((*this) == an_other);
+      const auto my_end = end();
+      const auto other_end = an_other.end();
+
+      for (auto my_pos = begin(), other_pos = an_other.begin(); my_pos != my_end && other_pos != other_end; ++my_pos, ++other_pos)
+      {
+         if (my_pos->first < other_pos->first)
+            return true;
+         if (other_pos->first < my_pos->first)
+            return false;
+
+         if (my_pos->second < other_pos->second)
+            return true;
+         if (other_pos->second < my_pos->second)
+            return false;
+      }
+
+      if (size() >= an_other.size())
+         return false;
+
+      return true;
    }
 
 }

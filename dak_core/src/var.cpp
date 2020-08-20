@@ -3,6 +3,7 @@
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
 #include <dak/core/var.h>
+#include <dak/core/any_compare_op.h>
 
 #include <typeindex>
 
@@ -34,8 +35,8 @@ namespace dak_ns::core_ns
 
    int32_t any_var_t::compare_same_type(const var_t& an_other) const
    {
-      // TODO
-      return 0;
+      // TODO: optimize with any_var_t to use as_any() instead to avoid copy.
+      return compare_op_t::call(get_any(), an_other.get_any());
    }
 }
 

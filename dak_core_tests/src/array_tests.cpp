@@ -1,6 +1,7 @@
 #include "CppUnitTest.h"
 
 #include <dak/core/array.h>
+#include <dak/core/any_compare_op.h>
 #include <tests_helpers.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -153,5 +154,56 @@ namespace tests
          Assert::AreEqual<index_t>(6, a1.size());
          Assert::AreEqual<int64_t>(8, a1[5]);
       }
+
+      TEST_METHOD(array_compare)
+      {
+         compare_op_t::register_ops();
+
+         array_t a_empty;
+         array_t a_small1;
+         array_t a_small2;
+         array_t a_big1;
+         array_t a_big2;
+
+         a_small1.grow() = 2;
+
+         a_small2.grow() = 3;
+
+         a_big1.grow() = 3;
+         a_big1.grow() = 4;
+
+         a_big2.grow() = 4;
+
+         Assert::IsFalse(a_empty < a_empty);
+         Assert::IsTrue(a_empty < a_small1);
+         Assert::IsTrue(a_empty < a_small2);
+         Assert::IsTrue(a_empty < a_big1);
+         Assert::IsTrue(a_empty < a_big2);
+
+         Assert::IsFalse(a_small1 < a_empty);
+         Assert::IsFalse(a_small1 < a_small1);
+         Assert::IsTrue(a_small1 < a_small2);
+         Assert::IsTrue(a_small1 < a_big1);
+         Assert::IsTrue(a_small1 < a_big2);
+
+         Assert::IsFalse(a_small2 < a_empty);
+         Assert::IsFalse(a_small2 < a_small1);
+         Assert::IsFalse(a_small2 < a_small2);
+         Assert::IsTrue(a_small2 < a_big1);
+         Assert::IsTrue(a_small2 < a_big2);
+
+         Assert::IsFalse(a_big1 < a_empty);
+         Assert::IsFalse(a_big1 < a_small1);
+         Assert::IsFalse(a_big1 < a_small2);
+         Assert::IsFalse(a_big1 < a_big1);
+         Assert::IsTrue(a_big1 < a_big2);
+
+         Assert::IsFalse(a_big2 < a_empty);
+         Assert::IsFalse(a_big2 < a_small1);
+         Assert::IsFalse(a_big2 < a_small2);
+         Assert::IsFalse(a_big2 < a_big1);
+         Assert::IsFalse(a_big2 < a_big2);
+      }
+
    };
 }

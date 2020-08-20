@@ -20,7 +20,7 @@ namespace dak_ns::core_ns
       template<class A>
       static bool call(const std::any& arg_b)
       {
-         std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<A>(), arg_b);
+         const std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<A>(), arg_b);
          if (result.has_value())
             return std::any_cast<bool>(result);
          else
@@ -30,7 +30,7 @@ namespace dak_ns::core_ns
       template<class A, class B>
       static bool call()
       {
-         std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<A>(), std::make_any<B>());
+         const std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<A>(), std::make_any<B>());
          if (result.has_value())
             return std::any_cast<bool>(result);
          else
