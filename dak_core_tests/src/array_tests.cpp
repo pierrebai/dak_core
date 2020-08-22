@@ -2,7 +2,7 @@
 
 #include <dak/core/array.h>
 #include <dak/core/any_compare_op.h>
-#include <tests_helpers.h>
+#include <dak/tests/helpers.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace dak_ns::core_ns;

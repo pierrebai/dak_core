@@ -1,4 +1,4 @@
-// File: dak/any_ops.h
+// File: dak/core/any_ops.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
@@ -17,7 +17,25 @@
 namespace dak_ns::core_ns
 {
    // TODO: allow additional arguments to the operators.
-   //       In fact, separating selection types from arguments types would be best.
+
+   //////////////////////////////////////////////////////////////////////////
+   //
+   // Selectors for the operation.
+
+   // This template converts any type into the type std::type_index.
+   // It is used so that we can build a tuple containing a type index
+   // for each selection type.
+   template <class A>
+   struct op_selector_converter_t
+   {
+      using selector_t = std::type_index;
+   };
+
+   template <class... SELECTORS>
+   struct op_selector_t
+   {
+      using selector_t = std::tuple<typename op_selector_converter_t<SELECTORS>::selector_t...>;
+   };
 
    //////////////////////////////////////////////////////////////////////////
    //
@@ -69,18 +87,19 @@ namespace dak_ns::core_ns
    template <class OP>
    struct unary_ops_t;
 
-   template <class OP>
+   template <class OP, class... EXTRA_SELECTORS>
    struct unary_op_t
    {
-      using op_t = std::function<std::any(const std::any& arg_a)>;
+      using op_func_t = std::function<std::any(const std::any& arg_a)>;
+      using selector_t = typename op_selector_t<std::any, EXTRA_SELECTORS...>::selector_t;
 
       unary_op_t() = default;
-      unary_op_t(const op_t& an_op) : my_op(an_op) {}
+      unary_op_t(const op_func_t& an_op) : my_op_func(an_op) {}
 
    private:
       static std::any no_op(const std::any&) { return {}; }
 
-      op_t my_op = no_op;
+      op_func_t my_op_func = no_op;
 
       friend struct unary_ops_t<OP>;
    };
@@ -92,36 +111,37 @@ namespace dak_ns::core_ns
    template <class OP>
    struct unary_ops_t
    {
-      using args_t = std::type_index;
+      using selector_t = typename OP::selector_t;
       using op_t = unary_op_t<OP>;
 
-      template <class A>
+      template <class A, class... EXTRA_SELECTORS>
       static void register_op(const op_t& an_op)
       {
          auto& ops = get_ops();
-         ops[args_t(std::type_index(typeid(A)))] = an_op;
+         ops[selector_t(std::type_index(typeid(A)), std::type_index(typeid(EXTRA_SELECTORS))...)] = an_op;
       }
 
    private:
+      template <class... EXTRA_SELECTORS>
       static std::any call(const std::any& arg_a)
       {
          const auto& ops = get_ops();
-         const auto pos = ops.find(args_t(std::type_index(arg_a.type())));
+         const auto pos = ops.find(selector_t(std::type_index(arg_a.type()), std::type_index(typeid(EXTRA_SELECTORS))...));
          if (pos == ops.end())
             return std::any();
-         return pos->second.my_op(arg_a);
+         return pos->second.my_op_func(arg_a);
       }
 
-      static std::map<args_t, op_t>& get_ops()
+      static std::map<selector_t, op_t>& get_ops()
       {
-         static std::map<args_t, op_t> ops;
+         static std::map<selector_t, op_t> ops;
          return ops;
       }
 
       friend OP;
    };
 
-   template <class RET, class A, class OP>
+   template <class RET, class A, class OP, class... EXTRA_SELECTORS>
    void make_unary_op(std::function<RET(const A& arg_a)> a_func)
    {
       unary_op_t<OP> op([a_func](const std::any& arg_a) -> std::any
@@ -129,7 +149,7 @@ namespace dak_ns::core_ns
          return std::any(a_func(std::any_cast<A>(arg_a)));
       });
 
-      unary_ops_t<OP>::register_op<A>(op);
+      unary_ops_t<OP>::register_op<A, EXTRA_SELECTORS...>(op);
    }
 
    //////////////////////////////////////////////////////////////////////////
@@ -183,10 +203,11 @@ namespace dak_ns::core_ns
    template <class OP>
    struct binary_ops_t;
 
-   template <class OP>
+   template <class OP, class... EXTRA_SELECTORS>
    struct binary_op_t
    {
       using op_t = std::function<std::any(const std::any& arg_a, const std::any& arg_b)>;
+      using selector_t = typename op_selector_t<std::any, std::any, EXTRA_SELECTORS...>::selector_t;
 
       binary_op_t() = default;
       binary_op_t(const op_t& an_op) : my_op(an_op) {}
@@ -206,36 +227,37 @@ namespace dak_ns::core_ns
    template <class OP>
    struct binary_ops_t
    {
-      using args_t = std::pair<std::type_index, std::type_index>;
+      using selector_t = typename OP::selector_t;
       using op_t = binary_op_t<OP>;
 
-      template <class A, class B>
+      template <class A, class B, class... EXTRA_SELECTORS>
       static void register_op(const op_t& an_op)
       {
          auto& ops = get_ops();
-         ops[args_t(std::type_index(typeid(A)), std::type_index(typeid(B)))] = an_op;
+         ops[selector_t(std::type_index(typeid(A)), std::type_index(typeid(B)), std::type_index(typeid(EXTRA_SELECTORS))...)] = an_op;
       }
 
    private:
+      template <class... EXTRA_SELECTORS>
       static std::any call(const std::any& arg_a, const std::any& arg_b)
       {
          const auto& ops = get_ops();
-         const auto pos = ops.find(args_t(std::type_index(arg_a.type()), std::type_index(arg_b.type())));
+         const auto pos = ops.find(selector_t(std::type_index(arg_a.type()), std::type_index(arg_b.type()), std::type_index(typeid(EXTRA_SELECTORS))...));
          if (pos == ops.end())
             return std::any();
          return pos->second.my_op(arg_a, arg_b);
       }
 
-      static std::map<args_t, op_t>& get_ops()
+      static std::map<selector_t, op_t>& get_ops()
       {
-         static std::map<args_t, op_t> ops;
+         static std::map<selector_t, op_t> ops;
          return ops;
       }
 
       friend OP;
    };
 
-   template <class RET, class A, class B, class OP>
+   template <class RET, class A, class B, class OP, class... EXTRA_SELECTORS>
    void make_binary_op(std::function<RET(const A& arg_a, const B& arg_b)> a_func)
    {
       binary_op_t<OP> op([a_func](const std::any& arg_a, const std::any& arg_b) -> std::any
@@ -243,7 +265,7 @@ namespace dak_ns::core_ns
          return std::any(a_func(std::any_cast<A>(arg_a), std::any_cast<B>(arg_b)));
       });
 
-      binary_ops_t<OP>::register_op<A, B>(op);
+      binary_ops_t<OP>::register_op<A, B, EXTRA_SELECTORS...>(op);
    }
 
    // Needed so that the global operations are initialized in the tests.

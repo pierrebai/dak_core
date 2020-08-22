@@ -1,4 +1,4 @@
-// File: dak/internal_names.h
+// File: dak/core/internal_names.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 

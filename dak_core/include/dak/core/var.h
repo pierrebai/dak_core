@@ -1,4 +1,4 @@
-// File: dak/var.h
+// File: dak/core/var.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
@@ -27,7 +27,7 @@ namespace dak_ns::core_ns
    {
       // Access.
       virtual bool set_any(std::any& a_value) = 0;
-      virtual std::any get_any() const = 0;
+      virtual const std::any& get_any() const = 0;
 
       // Type.
       virtual const std::type_info& get_type() const = 0;
@@ -85,7 +85,7 @@ namespace dak_ns::core_ns
          return true;
       }
 
-      std::any get_any() const override { return my_value; }
+      const std::any& get_any() const override { return my_any = my_value; return my_any; }
 
       operator T& () { return my_value; }
       operator const T& () const { return my_value; }
@@ -108,12 +108,9 @@ namespace dak_ns::core_ns
       }
 
    private:
+      std::any my_any;
       T my_value;
    };
-
-   //////////////////////////////////////////////////////////////////////////
-   //
-   // TODO: function member var.
 
    //////////////////////////////////////////////////////////////////////////
    //
@@ -137,7 +134,7 @@ namespace dak_ns::core_ns
 
       // Access.
       bool set_any(std::any& a_value) override { my_value = a_value; return true; }
-      std::any get_any() const override { return my_value; }
+      const std::any& get_any() const override { return my_value; }
 
       std::any& as_any() { return my_value; }
       const std::any& as_any() const { return my_value; }
@@ -148,8 +145,9 @@ namespace dak_ns::core_ns
       template <class T>
       T& as() { ensure<T>(); return std::any_cast<T&>(my_value); }
 
+      // Note: will throw if the wring type is requested!
       template <class T>
-      const T as() const { return my_as<T>(); }
+      const T as() const { verify<T>(); return std::any_cast<const T&>(my_value); }
 
       template <class T>
       operator T&() { return as<T>(); }
@@ -238,47 +236,12 @@ namespace dak_ns::core_ns
       // Comparisons.
       comparison_t compare_same_type(const var_t& an_other) const override;
 
-      template <class T>
-      const T my_as() const
-      {
-         if (verify<T>())
-            return std::any_cast<const T&>(my_value);
-         if (compatible<T>())
-            return convert_op_t::call<T>(my_value);
-         return {};
-      }
-
    private:
       std::any my_value;
    };
 
    DAK_CORE_VAR_ALL_OPERATORS(any_var_t)
 
-   template <class T>
-   const T& as(const var_t& a_var)
-   {
-      if (auto mem_var = dynamic_cast<member_var_t<T>*>(&a_var))
-      {
-         return mem_var->as();
-      }
-      if (auto any_var = dynamic_cast<any_var_t*>(&a_var))
-      {
-         return any_var->as<T>();
-      }
-   }
-
-   template <class T>
-   T& as(var_t& a_var)
-   {
-      if (auto mem_var = dynamic_cast<member_var_t<T> *>(&a_var))
-      {
-         return mem_var->as();
-      }
-      if (auto any_var = dynamic_cast<any_var_t *>(&a_var))
-      {
-         return any_var->as<T>();
-      }
-   }
 }
 
 #endif /* DAK_CORE_VAR_H */

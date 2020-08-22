@@ -1,4 +1,4 @@
-// File: dak/name.h
+// File: dak/core/name.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 

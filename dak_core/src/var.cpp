@@ -38,7 +38,6 @@ namespace dak_ns::core_ns
 
    comparison_t any_var_t::compare_same_type(const var_t& an_other) const
    {
-      // TODO: optimize with any_var_t to use as_any() instead to avoid copy.
       return compare_op_t::call(get_any(), an_other.get_any());
    }
 

@@ -2,7 +2,7 @@
 
 #include <dak/core/dict.h>
 #include <dak/core/any_compare_op.h>
-#include <tests_helpers.h>
+#include <dak/tests/helpers.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace dak_ns::core_ns;
@@ -84,7 +84,7 @@ namespace tests
          dict_t d1;
 
          d1[ns::window] = 3;
-         d1[ns::canvas] = 4;
+         d1[ns::canvas] = int64_t(4);
          d1[ns::point] = 5.0;
          d1[ns::width] = L"6";
 

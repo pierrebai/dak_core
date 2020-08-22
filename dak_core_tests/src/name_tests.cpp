@@ -1,7 +1,7 @@
 #include <CppUnitTest.h>
 
 #include <dak/core/name.h>
-#include <tests_helpers.h>
+#include <dak/tests/helpers.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace dak_ns::core_ns;

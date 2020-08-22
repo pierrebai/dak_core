@@ -1,4 +1,4 @@
-// File: dak/any_is_compatible_op.h
+// File: dak/core/any_is_compatible_op.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
@@ -17,20 +17,20 @@ namespace dak_ns::core_ns
 
    struct is_compatible_op_t : binary_op_t<is_compatible_op_t>
    {
-      template<class A>
+      template<class TO>
       static bool call(const std::any& arg_b)
       {
-         const std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<A>(), arg_b);
+         const std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<TO>(), arg_b);
          if (result.has_value())
             return std::any_cast<bool>(result);
          else
             return false;
       }
 
-      template<class A, class B>
+      template<class TO, class FROM>
       static bool call()
       {
-         const std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<A>(), std::make_any<B>());
+         const std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<TO>(), std::make_any<FROM>());
          if (result.has_value())
             return std::any_cast<bool>(result);
          else

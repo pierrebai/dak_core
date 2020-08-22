@@ -1,4 +1,4 @@
-// File: dak/any_convert_op.h
+// File: dak/core/any_convert_op.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
@@ -13,26 +13,26 @@ namespace dak_ns::core_ns
    //
    // The convert operation converts a a type to another.
 
-   struct convert_op_t : binary_op_t<convert_op_t>
+   struct convert_op_t : unary_op_t<convert_op_t, std::any>
    {
 
-      template<class A>
-      static A call(const std::any& arg_b)
+      template<class TO>
+      static TO call(const std::any& arg_a)
       {
-         const std::any result = binary_ops_t<convert_op_t>::call(std::make_any<A>(), arg_b);
+         const std::any result = unary_ops_t<convert_op_t>::call<TO>(arg_a);
          if (result.has_value())
-            return std::any_cast<A>(result);
+            return std::any_cast<TO>(result);
          else
-            return A {};
+            return TO {};
       }
-      template<class A, class B>
-      static A call(const B& arg_b)
+      template<class TO, class FROM>
+      static TO call(const FROM& arg_a)
       {
-         const std::any result = binary_ops_t<convert_op_t>::call(A {}, arg_b);
+         const std::any result = unary_ops_t<convert_op_t>::call<TO>(arg_a);
          if (result.has_value())
-            return std::any_cast<A>(result);
+            return std::any_cast<TO>(result);
          else
-            return A {};
+            return TO {};
       }
 
       // Note: pre-defined operations implementation are automatically registered,

@@ -1,4 +1,4 @@
-// File: dak/object.h
+// File: dak/core/object.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 

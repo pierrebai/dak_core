@@ -1,4 +1,4 @@
-// File: dak/all.h
+// File: dak/core/all.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 

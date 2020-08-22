@@ -1,4 +1,4 @@
-// File: dak/stream.h
+// File: dak/core/stream.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 

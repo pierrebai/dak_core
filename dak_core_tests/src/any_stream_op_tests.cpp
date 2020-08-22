@@ -1,7 +1,7 @@
 #include <CppUnitTest.h>
 
 #include <dak/core/all.h>
-#include <tests_helpers.h>
+#include <dak/tests/helpers.h>
 
 #include <sstream>
 

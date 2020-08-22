@@ -1,4 +1,4 @@
-// File: dak/types.h
+// File: dak/core/types.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 

@@ -12,7 +12,7 @@ add_library(dak_core_tests SHARED
    src/name_tests.cpp
    src/stream_tests.cpp
 
-   include/tests_helpers.h
+   include/dak/tests/helpers.h
 )
 
 target_link_libraries(dak_core_tests PUBLIC

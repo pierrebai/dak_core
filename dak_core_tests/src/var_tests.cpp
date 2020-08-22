@@ -1,7 +1,7 @@
 #include <CppUnitTest.h>
 
 #include <dak/core/var.h>
-#include <tests_helpers.h>
+#include <dak/tests/helpers.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace dak_ns::core_ns;
@@ -11,7 +11,7 @@ namespace tests
    TEST_CLASS(var_tests)
 	{
 	public:
-		TEST_METHOD(element_base)
+		TEST_METHOD(var_base)
 		{
          any_var_t e;
 
@@ -28,7 +28,7 @@ namespace tests
          Assert::IsTrue(e != any_var_t(1));
       }
 
-      TEST_METHOD(element_constructors)
+      TEST_METHOD(var_constructors)
       {
          any_var_t e_u;
          any_var_t e_t1(text_t(L"text_t"));
@@ -67,7 +67,7 @@ namespace tests
          Assert::AreEqual(typeid(name_t), e_n.get_type());
       }
 
-      TEST_METHOD(element_assignments)
+      TEST_METHOD(var_assignments)
       {
          any_var_t e_u;
          any_var_t e_t1;
@@ -126,6 +126,8 @@ namespace tests
 
       TEST_METHOD(var_text_assignments)
       {
+         void initialize_ops();
+
          any_var_t e1;
 
          e1 = L"hello";
@@ -138,8 +140,10 @@ namespace tests
          Assert::AreEqual<text_t>(text_t(L"bye"), e1);
       }
 
-      TEST_METHOD(element_conversion)
+      TEST_METHOD(var_conversion)
       {
+         void initialize_ops();
+
          any_var_t e_u;
          any_var_t e_t1(text_t(L"text_t"));
          any_var_t e_t2(L"strptr");
@@ -177,8 +181,10 @@ namespace tests
          Assert::AreEqual<name_t>(ns::view, e_n);
       }
 
-      TEST_METHOD(element_const_conversion)
+      TEST_METHOD(var_const_conversion)
       {
+         void initialize_ops();
+
          const any_var_t e_u;
          const any_var_t e_t1(text_t(L"text_t"));
          const any_var_t e_t2(L"strptr");
@@ -216,7 +222,7 @@ namespace tests
          Assert::AreEqual<name_t>(ns::view, e_n);
       }
 
-      TEST_METHOD(element_unknown_assignments)
+      TEST_METHOD(var_unknown_assignments)
       {
          any_var_t e_u;
          any_var_t e_t1(text_t(L"text_t"));
@@ -293,7 +299,7 @@ namespace tests
          Assert::AreEqual<name_t>(name_t(), e_n);
       }
 
-      TEST_METHOD(element_size)
+      TEST_METHOD(var_size)
       {
          dict_t d;
          d[ns::view] = 33;
@@ -342,8 +348,10 @@ namespace tests
          Assert::AreEqual<index_t>(0, e_n.size());
       }
 
-      TEST_METHOD(element_compatible)
+      TEST_METHOD(var_compatible)
       {
+         void initialize_ops();
+
          dict_t d;
          d[ns::view] = 33;
          d[ns::vector] = 4;
@@ -414,7 +422,7 @@ namespace tests
          Assert::IsFalse(e_n.compatible<int64_t>());
       }
 
-      TEST_METHOD(element_reset)
+      TEST_METHOD(var_reset)
       {
          dict_t d;
          d[ns::view] = 33;
@@ -481,8 +489,10 @@ namespace tests
          Assert::AreEqual(typeid(void), e_n.get_type());
       }
 
-      TEST_METHOD(element_ensure)
+      TEST_METHOD(var_ensure)
       {
+         void initialize_ops();
+
          any_var_t e_u;
          any_var_t e_t1;
          any_var_t e_t2;
@@ -538,8 +548,10 @@ namespace tests
          Assert::AreEqual(typeid(name_t), e_n.get_type());
       }
 
-      TEST_METHOD(element_ensure_preserve_value)
+      TEST_METHOD(var_ensure_preserve_value)
       {
+         void initialize_ops();
+
          dict_t d;
          d[ns::view] = 33;
          d[ns::vector] = 4;
@@ -662,8 +674,10 @@ namespace tests
 
       }
 
-      TEST_METHOD(element_verify)
+      TEST_METHOD(var_verify)
       {
+         void initialize_ops();
+
          dict_t d;
          d[ns::view] = 33;
          d[ns::vector] = 4;
@@ -748,8 +762,10 @@ namespace tests
          Assert::AreEqual<name_t>(ns::view, e_n);
       }
 
-      TEST_METHOD(element_int64_operators)
+      TEST_METHOD(var_int64_operators)
       {
+         void initialize_ops();
+
          any_var_t e;
 
          Assert::AreEqual<int64_t>(0, e);
@@ -803,8 +819,10 @@ namespace tests
          Assert::AreEqual<text_t>(L"bye", e);
       }
 
-      TEST_METHOD(element_double_operators)
+      TEST_METHOD(var_double_operators)
       {
+         void initialize_ops();
+
          any_var_t e;
 
          e = 0.0;
@@ -860,8 +878,10 @@ namespace tests
          Assert::AreEqual<text_t>(L"bye", e);
       }
 
-      TEST_METHOD(element_bool_operator)
+      TEST_METHOD(var_bool_operator)
       {
+         void initialize_ops();
+
          any_var_t e_u;
          any_var_t e_t1(L"");
          any_var_t e_t2(text_t(L""));
@@ -945,8 +965,10 @@ namespace tests
          Assert::AreEqual<bool>(true, e_n);
       }
 
-      TEST_METHOD(element_array)
+      TEST_METHOD(var_array)
       {
+         void initialize_ops();
+
          array_t a;
          a.grow() = 55;
          a.grow() = 66.;
@@ -971,8 +993,10 @@ namespace tests
          Assert::AreEqual<float>(77.f, e[4]);
       }
 
-      TEST_METHOD(element_dict)
+      TEST_METHOD(var_dict)
       {
+         void initialize_ops();
+
          dict_t d;
          d[ns::view] = 33.;
          d[ns::vector] = 4;

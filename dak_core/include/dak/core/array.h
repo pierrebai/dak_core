@@ -1,4 +1,4 @@
-// File: dak/array.h
+// File: dak/core/array.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
