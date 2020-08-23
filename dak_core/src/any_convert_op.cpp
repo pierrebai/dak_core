@@ -145,9 +145,9 @@ namespace dak_ns::core_ns
             make_unary_op<bool, float,    convert_op_t, bool>([](float arg_b) -> bool { return static_cast<bool>(arg_b); });
             make_unary_op<bool, double,   convert_op_t, bool>([](double arg_b) -> bool { return static_cast<bool>(arg_b); });
             make_unary_op<bool, name_t,   convert_op_t, bool>([](name_t arg_b) -> bool { return arg_b.is_valid(); });
-            make_unary_op<bool, text_t,   convert_op_t, bool>([](text_t arg_b) -> bool { return static_cast<bool>(arg_b.size()); });
-            make_unary_op<bool, array_t,  convert_op_t, bool>([](array_t arg_b) -> bool { return static_cast<bool>(arg_b.size()); });
-            make_unary_op<bool, dict_t,   convert_op_t, bool>([](dict_t arg_b) -> bool { return static_cast<bool>(arg_b.size()); });
+            make_unary_op<bool, text_t,   convert_op_t, bool>([](const text_t& arg_b) -> bool { return static_cast<bool>(arg_b.size()); });
+            make_unary_op<bool, array_t,  convert_op_t, bool>([](const array_t& arg_b) -> bool { return static_cast<bool>(arg_b.size()); });
+            make_unary_op<bool, dict_t,   convert_op_t, bool>([](const dict_t& arg_b) -> bool { return static_cast<bool>(arg_b.size()); });
 
             make_unary_op<float, bool,      convert_op_t, float>([](bool arg_b) -> float { return static_cast<float>(arg_b); });
             make_unary_op<float, char,      convert_op_t, float>([](char arg_b) -> float { return static_cast<float>(arg_b); });

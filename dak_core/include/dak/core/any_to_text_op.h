@@ -20,7 +20,7 @@ namespace dak_ns::core_ns
       {
          const std::any result = unary_ops_t<to_text_op_t>::call(arg_a);
          if (result.has_value())
-            return std::any_cast<text_t>(result);
+            return *std::any_cast<text_t>(&result);
          else
             return {};
       }

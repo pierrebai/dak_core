@@ -146,7 +146,7 @@ namespace dak_ns::core_ns
    {
       unary_op_t<OP> op([a_func](const std::any& arg_a) -> std::any
       {
-         return std::any(a_func(std::any_cast<A>(arg_a)));
+         return std::any(a_func(*std::any_cast<A>(&arg_a)));
       });
 
       unary_ops_t<OP>::register_op<A, EXTRA_SELECTORS...>(op);
@@ -262,7 +262,7 @@ namespace dak_ns::core_ns
    {
       binary_op_t<OP> op([a_func](const std::any& arg_a, const std::any& arg_b) -> std::any
       {
-         return std::any(a_func(std::any_cast<A>(arg_a), std::any_cast<B>(arg_b)));
+         return std::any(a_func(*std::any_cast<A>(&arg_a), *std::any_cast<B>(&arg_b)));
       });
 
       binary_ops_t<OP>::register_op<A, B, EXTRA_SELECTORS...>(op);

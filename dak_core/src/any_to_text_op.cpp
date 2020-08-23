@@ -36,9 +36,9 @@ namespace dak_ns::core_ns
             make_unary_op<text_t, name_t, to_text_op_t>([](name_t arg_a) -> text_t { return arg_a.as_text(); });
             make_unary_op<text_t, float, to_text_op_t>([](float arg_a) -> text_t { std::wostringstream os; os << arg_a; return os.str(); });
             make_unary_op<text_t, double, to_text_op_t>([](double arg_a) -> text_t { std::wostringstream os; os << arg_a; return os.str(); });
-            make_unary_op<text_t, text_t, to_text_op_t>([](text_t arg_a) -> text_t { return arg_a; });
-            make_unary_op<text_t, array_t, to_text_op_t>([](array_t arg_a) -> text_t { std::wostringstream os; os << arg_a; return os.str(); });
-            make_unary_op<text_t, dict_t, to_text_op_t>([](dict_t arg_a) -> text_t { std::wostringstream os; os << arg_a; return os.str(); });
+            make_unary_op<text_t, text_t, to_text_op_t>([](const text_t& arg_a) -> text_t { return arg_a; });
+            make_unary_op<text_t, array_t, to_text_op_t>([](const array_t& arg_a) -> text_t { std::wostringstream os; os << arg_a; return os.str(); });
+            make_unary_op<text_t, dict_t, to_text_op_t>([](const dict_t& arg_a) -> text_t { std::wostringstream os; os << arg_a; return os.str(); });
             make_unary_op<text_t, str_ptr_t, to_text_op_t>([](str_ptr_t arg_a) -> text_t { return arg_a ? arg_a : L""; });
          }
       };

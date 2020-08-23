@@ -18,9 +18,9 @@ namespace dak_ns::core_ns
       {
          size_op_init_t()
          {
-            make_unary_op<index_t, text_t, size_op_t>([](text_t arg_a) -> index_t { return arg_a.size(); });
-            make_unary_op<index_t, array_t, size_op_t>([](array_t arg_a) -> index_t { return arg_a.size(); });
-            make_unary_op<index_t, dict_t, size_op_t>([](dict_t arg_a) -> index_t { return arg_a.size(); });
+            make_unary_op<index_t, text_t, size_op_t>([](const text_t& arg_a) -> index_t { return arg_a.size(); });
+            make_unary_op<index_t, array_t, size_op_t>([](const array_t& arg_a) -> index_t { return arg_a.size(); });
+            make_unary_op<index_t, dict_t, size_op_t>([](const dict_t& arg_a) -> index_t { return arg_a.size(); });
             make_unary_op<index_t, str_ptr_t, size_op_t>([](str_ptr_t arg_a) -> index_t { return arg_a ? wcslen(arg_a) : 0; });
          }
       };

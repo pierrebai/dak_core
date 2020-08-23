@@ -81,7 +81,7 @@ namespace dak_ns::core_ns
          std::any t_value = convert_op_t::call<T>(a_value);
          if (!t_value.has_value())
             return false;
-         my_value = std::any_cast<T>(&t_value);
+         my_value = *std::any_cast<T>(&t_value);
          return true;
       }
 
@@ -145,15 +145,15 @@ namespace dak_ns::core_ns
       template <class T>
       T& as() { ensure<T>(); return std::any_cast<T&>(my_value); }
 
-      // Note: will throw if the wring type is requested!
+      // Note: will throw if the wrong type is requested!
       template <class T>
-      const T as() const { verify<T>(); return std::any_cast<const T&>(my_value); }
+      const T& as() const { verify<T>(); return std::any_cast<const T&>(my_value); }
 
       template <class T>
       operator T&() { return as<T>(); }
 
       template <class T>
-      operator const T() const { return as<T>(); }
+      operator const T&() const { return as<T>(); }
 
       // Modify.
       any_var_t& operator=(const any_var_t& an_other) = default;

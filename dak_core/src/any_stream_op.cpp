@@ -34,9 +34,9 @@ namespace dak_ns::core_ns
             make_binary_op<bool, std::wostream*, name_t, stream_op_t>([](std::wostream* a_stream, name_t arg_b) -> bool { *a_stream << arg_b; return true; });
             make_binary_op<bool, std::wostream*, float, stream_op_t>([](std::wostream* a_stream, float arg_b) -> bool { *a_stream << arg_b; return true; });
             make_binary_op<bool, std::wostream*, double, stream_op_t>([](std::wostream* a_stream, double arg_b) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<bool, std::wostream*, text_t, stream_op_t>([](std::wostream* a_stream, text_t arg_b) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<bool, std::wostream*, array_t, stream_op_t>([](std::wostream* a_stream, array_t arg_b) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<bool, std::wostream*, dict_t, stream_op_t>([](std::wostream* a_stream, dict_t arg_b) -> bool { *a_stream << arg_b; return true; });
+            make_binary_op<bool, std::wostream*, text_t, stream_op_t>([](std::wostream* a_stream, const text_t& arg_b) -> bool { *a_stream << arg_b; return true; });
+            make_binary_op<bool, std::wostream*, array_t, stream_op_t>([](std::wostream* a_stream, const array_t& arg_b) -> bool { *a_stream << arg_b; return true; });
+            make_binary_op<bool, std::wostream*, dict_t, stream_op_t>([](std::wostream* a_stream, const dict_t& arg_b) -> bool { *a_stream << arg_b; return true; });
             make_binary_op<bool, std::wostream*, str_ptr_t, stream_op_t>([](std::wostream* a_stream, str_ptr_t arg_b) -> bool { *a_stream << (arg_b ? arg_b : L""); return true; });
          }
       };
