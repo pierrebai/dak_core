@@ -8,8 +8,6 @@
 #include <dak/core/any_unary_op.h>
 #include <dak/core/TYPES.h>
 
-#include <any>
-
 namespace dak_ns::core_ns
 {
 
@@ -23,7 +21,7 @@ namespace dak_ns::core_ns
    {
       static index_t call(const std::any& arg_a)
       {
-         const std::any result = unary_op_t<size_op_t>::call(arg_a);
+         const std::any result = call_op(arg_a);
          if (result.has_value())
             return std::any_cast<index_t>(result);
          else
@@ -33,7 +31,7 @@ namespace dak_ns::core_ns
       template<class A>
       static index_t call(const A& arg_a)
       {
-         return size_op_t::call(std::make_any<A>());
+         return call(std::make_any<A>());
       }
 
       // Note: pre-defined operations implementation are automatically registered,

@@ -87,7 +87,7 @@ namespace dak_ns::core_ns
       }
 
       template <class... EXTRA_SELECTORS>
-      static std::any call(EXTRA_ARGS... args, const std::any& arg_a)
+      static std::any call_op(EXTRA_ARGS... args, const std::any& arg_a)
       {
          using selector_t = typename op_selector_t<std::any, EXTRA_SELECTORS...>::selector_t;
          const auto& ops = get_ops<selector_t>();

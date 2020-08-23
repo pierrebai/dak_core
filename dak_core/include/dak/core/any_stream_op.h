@@ -7,7 +7,6 @@
 
 #include <dak/core/any_unary_op.h>
 
-#include <any>
 #include <ostream>
 
 namespace dak_ns::core_ns
@@ -23,14 +22,14 @@ namespace dak_ns::core_ns
    {
       static std::wostream& call(std::wostream& a_stream, const std::any& arg_b)
       {
-         unary_op_t<stream_op_t, std::wostream&>::call(a_stream, arg_b);
+         call_op(a_stream, arg_b);
          return a_stream;
       }
 
       template<class A>
       static std::wostream& call(std::wostream& a_stream, const A& arg_b)
       {
-         return stream_op_t::call(a_stream, std::make_any<A>());
+         return call(a_stream, std::make_any<A>());
       }
 
       // Note: pre-defined operations implementation are automatically registered,

@@ -7,8 +7,6 @@
 
 #include <dak/core/any_unary_op.h>
 
-#include <any>
-
 namespace dak_ns::core_ns
 {
    //////////////////////////////////////////////////////////////////////////
@@ -21,7 +19,7 @@ namespace dak_ns::core_ns
       template<class TO>
       static TO call(const std::any& arg_a)
       {
-         const std::any result = unary_op_t<convert_op_t>::call<TO>(arg_a);
+         const std::any result = call_op<TO>(arg_a);
          if (result.has_value())
             return std::any_cast<TO>(result);
          else
@@ -30,7 +28,7 @@ namespace dak_ns::core_ns
       template<class TO, class FROM>
       static TO call(const FROM& arg_a)
       {
-         const std::any result = unary_op_t<convert_op_t>::call<TO>(arg_a);
+         const std::any result = call_op<TO>(arg_a);
          if (result.has_value())
             return std::any_cast<TO>(result);
          else
