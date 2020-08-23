@@ -89,7 +89,7 @@ namespace dak_ns::core_ns
       template <class... EXTRA_SELECTORS>
       static std::any call_op(EXTRA_ARGS... args)
       {
-         using selector_t = typename op_selector_t<EXTRA_SELECTORS...>::selector_t;
+         using selector_t = typename nullary_op_selector_t<EXTRA_SELECTORS...>::selector_t;
          const auto& ops = get_ops<selector_t>();
          const auto pos = ops.find(nullary_op_selector_t<EXTRA_SELECTORS...>::make());
          if (pos == ops.end())
@@ -97,6 +97,18 @@ namespace dak_ns::core_ns
          return pos->second.my_op_func(args...);
       }
 
+      template <class... EXTRA_SELECTORS>
+      static std::any call_any_op(EXTRA_ARGS... args, EXTRA_SELECTORS... selectors)
+      {
+         using selector_t = typename nullary_op_selector_t<EXTRA_SELECTORS...>::selector_t;
+         const auto& ops = get_ops<selector_t>();
+         const auto pos = ops.find(nullary_op_selector_t<EXTRA_SELECTORS...>::make_any(selectors...));
+         if (pos == ops.end())
+            return std::any();
+         return pos->second.my_op_func(args...);
+      }
+
+   private:
       template <class... EXTRA_SELECTORS>
       static void register_op(const op_base_t& an_op)
       {

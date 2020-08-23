@@ -20,13 +20,7 @@ namespace dak_ns::core_ns
       template<class TO>
       static bool call(const std::any& arg_b)
       {
-         using selector_t = typename op_selector_t<std::any, std::any>::selector_t;
-         const auto& ops = get_ops<selector_t>();
-         const auto pos = ops.find(selector_t(std::type_index(typeid(TO)), std::type_index(arg_b.type())));
-         if (pos == ops.end())
-            return false;
-
-         const std::any result = pos->second.my_op_func();
+         const std::any result = call_any_op(std::type_index(typeid(TO)), std::type_index(arg_b.type()));
          if (result.has_value())
             return std::any_cast<bool>(result);
          else

@@ -45,6 +45,11 @@ namespace dak_ns::core_ns
       {
          return selector_t(std::type_index(typeid(EXTRA_SELECTORS))...);
       }
+
+      static selector_t make_any(EXTRA_SELECTORS... selectors)
+      {
+         return selector_t(selectors...);
+      }
    };
 
    //////////////////////////////////////////////////////////////////////////
@@ -66,6 +71,11 @@ namespace dak_ns::core_ns
       {
          return selector_t(std::type_index(arg_a.type()), std::type_index(typeid(EXTRA_SELECTORS))...);
       }
+
+      static selector_t make_any(const std::any& arg_a, EXTRA_SELECTORS... selectors)
+      {
+         return selector_t(std::type_index(arg_a.type()), selectors...);
+      }
    };
 
    //////////////////////////////////////////////////////////////////////////
@@ -86,6 +96,11 @@ namespace dak_ns::core_ns
       static selector_t make(const std::any& arg_a, const std::any& arg_b)
       {
          return selector_t(std::type_index(arg_a.type()), std::type_index(arg_b.type()), std::type_index(typeid(EXTRA_SELECTORS))...);
+      }
+
+      static selector_t make_any(const std::any& arg_a, const std::any& arg_b, EXTRA_SELECTORS... selectors)
+      {
+         return selector_t(std::type_index(arg_a.type()), std::type_index(arg_b.type()), selectors...);
       }
    };
 
