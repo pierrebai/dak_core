@@ -5,7 +5,10 @@
 #ifndef DAK_CORE_ANY_TO_TEXT_OP
 #define DAK_CORE_ANY_TO_TEXT_OP
 
-#include <dak/core/any_unary_ops.h>
+#include <dak/core/any_unary_op.h>
+#include <dak/core/types.h>
+
+#include <any>
 
 namespace dak_ns::core_ns
 {
@@ -18,7 +21,7 @@ namespace dak_ns::core_ns
    {
       static text_t call(const std::any& arg_a)
       {
-         const std::any result = unary_ops_t<to_text_op_t>::call(arg_a);
+         const std::any result = unary_op_t<to_text_op_t>::call(arg_a);
          if (result.has_value())
             return *std::any_cast<text_t>(&result);
          else

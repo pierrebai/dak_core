@@ -5,8 +5,9 @@
 #ifndef DAK_CORE_ANY_STREAM_OP
 #define DAK_CORE_ANY_STREAM_OP
 
-#include <dak/core/any_binary_ops.h>
+#include <dak/core/any_unary_op.h>
 
+#include <any>
 #include <ostream>
 
 namespace dak_ns::core_ns
@@ -18,11 +19,11 @@ namespace dak_ns::core_ns
    //
    // Note: the stream is received by pointer to travel in a std::any.
 
-   struct stream_op_t : binary_op_t<stream_op_t>
+   struct stream_op_t : unary_op_t<stream_op_t, std::wostream&>
    {
       static std::wostream& call(std::wostream& a_stream, const std::any& arg_b)
       {
-         binary_ops_t<stream_op_t>::call(std::any(&a_stream), arg_b);
+         unary_op_t<stream_op_t, std::wostream&>::call(a_stream, arg_b);
          return a_stream;
       }
 

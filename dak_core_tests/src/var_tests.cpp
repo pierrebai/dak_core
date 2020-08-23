@@ -126,7 +126,7 @@ namespace tests
 
       TEST_METHOD(var_text_assignments)
       {
-         void initialize_ops();
+         void register_ops();
 
          any_var_t e1;
 
@@ -142,7 +142,7 @@ namespace tests
 
       TEST_METHOD(var_conversion)
       {
-         void initialize_ops();
+         void register_ops();
 
          any_var_t e_u;
          any_var_t e_t1(text_t(L"text_t"));
@@ -183,7 +183,7 @@ namespace tests
 
       TEST_METHOD(var_const_conversion)
       {
-         void initialize_ops();
+         void register_ops();
 
          const any_var_t e_u;
          const any_var_t e_t1(text_t(L"text_t"));
@@ -350,7 +350,7 @@ namespace tests
 
       TEST_METHOD(var_compatible)
       {
-         void initialize_ops();
+         void register_ops();
 
          dict_t d;
          d[ns::view] = 33;
@@ -491,7 +491,7 @@ namespace tests
 
       TEST_METHOD(var_ensure)
       {
-         void initialize_ops();
+         void register_ops();
 
          any_var_t e_u;
          any_var_t e_t1;
@@ -550,7 +550,7 @@ namespace tests
 
       TEST_METHOD(var_ensure_preserve_value)
       {
-         void initialize_ops();
+         void register_ops();
 
          dict_t d;
          d[ns::view] = 33;
@@ -676,7 +676,7 @@ namespace tests
 
       TEST_METHOD(var_verify)
       {
-         void initialize_ops();
+         void register_ops();
 
          dict_t d;
          d[ns::view] = 33;
@@ -764,7 +764,7 @@ namespace tests
 
       TEST_METHOD(var_int64_operators)
       {
-         void initialize_ops();
+         void register_ops();
 
          any_var_t e;
 
@@ -821,7 +821,7 @@ namespace tests
 
       TEST_METHOD(var_double_operators)
       {
-         void initialize_ops();
+         void register_ops();
 
          any_var_t e;
 
@@ -880,7 +880,7 @@ namespace tests
 
       TEST_METHOD(var_bool_operator)
       {
-         void initialize_ops();
+         void register_ops();
 
          any_var_t e_u;
          any_var_t e_t1(L"");
@@ -967,7 +967,7 @@ namespace tests
 
       TEST_METHOD(var_array)
       {
-         void initialize_ops();
+         void register_ops();
 
          array_t a;
          a.grow() = 55;
@@ -995,7 +995,7 @@ namespace tests
 
       TEST_METHOD(var_dict)
       {
-         void initialize_ops();
+         void register_ops();
 
          dict_t d;
          d[ns::view] = 33.;

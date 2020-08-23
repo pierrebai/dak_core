@@ -5,7 +5,9 @@
 #ifndef DAK_CORE_ANY_CONVERT_OP
 #define DAK_CORE_ANY_CONVERT_OP
 
-#include <dak/core/any_unary_ops.h>
+#include <dak/core/any_unary_op.h>
+
+#include <any>
 
 namespace dak_ns::core_ns
 {
@@ -13,13 +15,13 @@ namespace dak_ns::core_ns
    //
    // The convert operation converts a a type to another.
 
-   struct convert_op_t : unary_op_t<convert_op_t, std::any>
+   struct convert_op_t : unary_op_t<convert_op_t>
    {
 
       template<class TO>
       static TO call(const std::any& arg_a)
       {
-         const std::any result = unary_ops_t<convert_op_t>::call<TO>(arg_a);
+         const std::any result = unary_op_t<convert_op_t>::call<TO>(arg_a);
          if (result.has_value())
             return std::any_cast<TO>(result);
          else
@@ -28,7 +30,7 @@ namespace dak_ns::core_ns
       template<class TO, class FROM>
       static TO call(const FROM& arg_a)
       {
-         const std::any result = unary_ops_t<convert_op_t>::call<TO>(arg_a);
+         const std::any result = unary_op_t<convert_op_t>::call<TO>(arg_a);
          if (result.has_value())
             return std::any_cast<TO>(result);
          else

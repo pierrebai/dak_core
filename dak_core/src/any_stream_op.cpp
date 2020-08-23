@@ -20,24 +20,24 @@ namespace dak_ns::core_ns
       {
          stream_op_init_t()
          {
-            make_binary_op<stream_op_t, bool, std::wostream*, bool      >([](std::wostream* a_stream, bool arg_b           ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, char      >([](std::wostream* a_stream, char arg_b           ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, wchar_t   >([](std::wostream* a_stream, wchar_t arg_b        ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, int8_t    >([](std::wostream* a_stream, int8_t arg_b         ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, int16_t   >([](std::wostream* a_stream, int16_t arg_b        ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, int32_t   >([](std::wostream* a_stream, int32_t arg_b        ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, int64_t   >([](std::wostream* a_stream, int64_t arg_b        ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, uint8_t   >([](std::wostream* a_stream, uint8_t arg_b        ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, uint16_t  >([](std::wostream* a_stream, uint16_t arg_b       ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, uint32_t  >([](std::wostream* a_stream, uint32_t arg_b       ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, uint64_t  >([](std::wostream* a_stream, uint64_t arg_b       ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, name_t    >([](std::wostream* a_stream, name_t arg_b         ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, float     >([](std::wostream* a_stream, float arg_b          ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, double    >([](std::wostream* a_stream, double arg_b         ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, text_t    >([](std::wostream* a_stream, const text_t& arg_b  ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, array_t   >([](std::wostream* a_stream, const array_t& arg_b ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, dict_t    >([](std::wostream* a_stream, const dict_t& arg_b  ) -> bool { *a_stream << arg_b; return true; });
-            make_binary_op<stream_op_t, bool, std::wostream*, str_ptr_t >([](std::wostream* a_stream, str_ptr_t arg_b      ) -> bool { *a_stream << (arg_b ? arg_b : L""); return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, bool      >([](std::wostream& a_stream, bool arg_b           ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, char      >([](std::wostream& a_stream, char arg_b           ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, wchar_t   >([](std::wostream& a_stream, wchar_t arg_b        ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, int8_t    >([](std::wostream& a_stream, int8_t arg_b         ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, int16_t   >([](std::wostream& a_stream, int16_t arg_b        ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, int32_t   >([](std::wostream& a_stream, int32_t arg_b        ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, int64_t   >([](std::wostream& a_stream, int64_t arg_b        ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, uint8_t   >([](std::wostream& a_stream, uint8_t arg_b        ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, uint16_t  >([](std::wostream& a_stream, uint16_t arg_b       ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, uint32_t  >([](std::wostream& a_stream, uint32_t arg_b       ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, uint64_t  >([](std::wostream& a_stream, uint64_t arg_b       ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, name_t    >([](std::wostream& a_stream, name_t arg_b         ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, float     >([](std::wostream& a_stream, float arg_b          ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, double    >([](std::wostream& a_stream, double arg_b         ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, text_t    >([](std::wostream& a_stream, const text_t& arg_b  ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, array_t   >([](std::wostream& a_stream, const array_t& arg_b ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, dict_t    >([](std::wostream& a_stream, const dict_t& arg_b  ) -> bool { a_stream << arg_b; return true; });
+            unary_op_t<stream_op_t, std::wostream&>::make_op<bool, str_ptr_t >([](std::wostream& a_stream, str_ptr_t arg_b      ) -> bool { a_stream << (arg_b ? arg_b : L""); return true; });
          }
       };
 

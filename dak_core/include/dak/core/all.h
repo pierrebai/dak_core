@@ -8,7 +8,7 @@
 #define DAK_CORE_ALL_H
 
 #include <dak/core/types.h>
-#include <dak/core/any_ops.h>
+#include <dak/core/any_op_selector.h>
 #include <dak/core/any_compare_op.h>
 #include <dak/core/any_convert_op.h>
 #include <dak/core/any_is_compatible_op.h>

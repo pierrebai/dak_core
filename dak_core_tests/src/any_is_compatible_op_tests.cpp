@@ -13,7 +13,7 @@ namespace tests
 	public:
 		TEST_METHOD(is_compatible)
 		{
-         is_compatible_op_t::register_ops();
+         register_ops();
 
          Assert::IsTrue(is_compatible_op_t::call<int32_t, bool>());
          Assert::IsTrue(is_compatible_op_t::call<int32_t, char>());

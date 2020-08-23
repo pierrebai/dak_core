@@ -5,7 +5,10 @@
 #ifndef DAK_CORE_ANY_SIZE_OP
 #define DAK_CORE_ANY_SIZE_OP
 
-#include <dak/core/any_unary_ops.h>
+#include <dak/core/any_unary_op.h>
+#include <dak/core/TYPES.h>
+
+#include <any>
 
 namespace dak_ns::core_ns
 {
@@ -20,7 +23,7 @@ namespace dak_ns::core_ns
    {
       static index_t call(const std::any& arg_a)
       {
-         const std::any result = unary_ops_t<size_op_t>::call(arg_a);
+         const std::any result = unary_op_t<size_op_t>::call(arg_a);
          if (result.has_value())
             return std::any_cast<index_t>(result);
          else

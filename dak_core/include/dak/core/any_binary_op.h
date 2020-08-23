@@ -1,11 +1,15 @@
-// File: dak/core/any_binary_ops.h
+// File: dak/core/any_binary_op.h
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
-#ifndef DAK_CORE_ANY_BINARY_OPS_H
-#define DAK_CORE_ANY_BINARY_OPS_H
+#ifndef DAK_CORE_ANY_BINARY_OP_H
+#define DAK_CORE_ANY_BINARY_OP_H
 
-#include <dak/core/any_ops.h>
+#include <dak/core/any_op_selector.h>
+
+#include <any>
+#include <functional>
+#include <map>
 
 namespace dak_ns::core_ns
 {
@@ -57,71 +61,57 @@ namespace dak_ns::core_ns
    //        std::any result = bianry_ops_t<foo>::call(arg_a, arg_b);
    //
 
-   template <class OP, class... EXTRA_SELECTORS>
+   template <class OP, class... EXTRA_ARGS>
    struct binary_op_t
    {
-      using op_t = std::function<std::any(const std::any& arg_a, const std::any& arg_b)>;
-      using selector_t = typename op_selector_t<std::any, std::any, EXTRA_SELECTORS...>::selector_t;
+      using op_func_t = std::function<std::any(EXTRA_ARGS ..., const std::any& arg_a, const std::any& arg_b)>;
+      using op_base_t = binary_op_t<OP, EXTRA_ARGS...>;
 
       binary_op_t() = default;
-      binary_op_t(const op_t& an_op) : my_op(an_op) {}
+      binary_op_t(const op_func_t& an_op) : my_op_func(an_op) {}
 
-      op_t my_op = no_op;
+      op_func_t my_op_func = no_op;
 
-      static std::any no_op(const std::any&, const std::any&) { return {}; }
-   };
+      static std::any no_op(EXTRA_ARGS..., const std::any&, const std::any&) { return {}; }
 
-   //////////////////////////////////////////////////////////////////////////
-   //
-   // Container of single-argument operation implementations for various types.
-
-   template <class OP>
-   struct binary_ops_t
-   {
-      using selector_t = typename OP::selector_t;
-      using op_t = binary_op_t<OP>;
-
-      template <class A, class B, class... EXTRA_SELECTORS>
-      static void register_op(const op_t& an_op)
+      // Creator of binary operation implementations.
+      template <class RET, class A, class B, class... EXTRA_SELECTORS>
+      static void make_op(std::function<RET(EXTRA_ARGS... args, const A& arg_a, const B& arg_b)> a_func)
       {
-         auto& ops = get_ops();
-         ops[selector_t(std::type_index(typeid(A)), std::type_index(typeid(B)), std::type_index(typeid(EXTRA_SELECTORS))...)] = an_op;
+         op_base_t op([a_func](EXTRA_ARGS... args, const std::any& arg_a, const std::any& arg_b) -> std::any
+         {
+            return std::any(a_func(args..., *std::any_cast<A>(&arg_a), *std::any_cast<B>(&arg_b)));
+         });
+
+         register_op<A, B, EXTRA_SELECTORS...>(op);
       }
 
-   private:
       template <class... EXTRA_SELECTORS>
-      static std::any call(const std::any& arg_a, const std::any& arg_b)
+      static std::any call(EXTRA_ARGS... args, const std::any& arg_a, const std::any& arg_b)
       {
-         const auto& ops = get_ops();
+         using selector_t = typename op_selector_t<std::any, std::any, EXTRA_SELECTORS...>::selector_t;
+         const auto& ops = get_ops<selector_t>();
          const auto pos = ops.find(selector_t(std::type_index(arg_a.type()), std::type_index(arg_b.type()), std::type_index(typeid(EXTRA_SELECTORS))...));
          if (pos == ops.end())
             return std::any();
-         return pos->second.my_op(arg_a, arg_b);
+         return pos->second.my_op_func(args..., arg_a, arg_b);
       }
 
-      static std::map<selector_t, op_t>& get_ops()
+      template <class A, class B, class... EXTRA_SELECTORS>
+      static void register_op(const op_base_t& an_op)
       {
-         static std::map<selector_t, op_t> ops;
+         using selector_t = typename op_selector_t<std::any, std::any, EXTRA_SELECTORS...>::selector_t;
+         auto& ops = get_ops<selector_t>();
+         ops[selector_t(std::type_index(typeid(A)), std::type_index(typeid(B)), std::type_index(typeid(EXTRA_SELECTORS))...)] = an_op;
+      }
+
+      template <class SELECTOR>
+      static std::map<SELECTOR, op_base_t>& get_ops()
+      {
+         static std::map<SELECTOR, op_base_t> ops;
          return ops;
       }
-
-      friend OP;
    };
-
-   //////////////////////////////////////////////////////////////////////////
-   //
-   // Creator of binary operation implementations.
-
-   template <class OP, class RET, class A, class B, class... EXTRA_SELECTORS>
-   void make_binary_op(std::function<RET(const A& arg_a, const B& arg_b)> a_func)
-   {
-      binary_op_t<OP> op([a_func](const std::any& arg_a, const std::any& arg_b) -> std::any
-      {
-         return std::any(a_func(*std::any_cast<A>(&arg_a), *std::any_cast<B>(&arg_b)));
-      });
-
-      binary_ops_t<OP>::register_op<A, B, EXTRA_SELECTORS...>(op);
-   }
 }
 
-#endif /* DAK_CORE_ANY_BINARY_OPS_H */
+#endif /* DAK_CORE_ANY_BINARY_OP_H */

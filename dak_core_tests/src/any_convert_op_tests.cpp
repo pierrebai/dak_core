@@ -13,7 +13,7 @@ namespace tests
 	public:
       TEST_METHOD(convert)
       {
-         convert_op_t::register_ops();
+         register_ops();
 
          Assert::AreEqual<int32_t>(1,  convert_op_t::call<int32_t, bool>(true));
          Assert::AreEqual<int32_t>(97, convert_op_t::call<int32_t, char>('a'));

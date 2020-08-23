@@ -1,10 +1,10 @@
 
 add_library(dak_core
    include/dak/core/all.h
-   include/dak/core/any_ops.h                   src/any_ops.cpp
-   include/dak/core/any_nullary_ops.h
-   include/dak/core/any_unary_ops.h
-   include/dak/core/any_binary_ops.h
+   include/dak/core/any_op_selector.h           src/any_ops.cpp
+   include/dak/core/any_nullary_op.h
+   include/dak/core/any_unary_op.h
+   include/dak/core/any_binary_op.h
    include/dak/core/any_compare_op.h            src/any_compare_op.cpp
    include/dak/core/any_convert_op.h            src/any_convert_op.cpp
    include/dak/core/any_is_compatible_op.h      src/any_is_compatible_op.cpp

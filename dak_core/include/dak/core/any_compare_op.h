@@ -5,9 +5,10 @@
 #ifndef DAK_CORE_ANY_COMPARE_OP
 #define DAK_CORE_ANY_COMPARE_OP
 
-#include <dak/core/any_binary_ops.h>
+#include <dak/core/any_binary_op.h>
+#include <dak/core/types.h>
 
-#include <exception>
+#include <any>
 
 namespace dak_ns::core_ns
 {
@@ -36,7 +37,7 @@ namespace dak_ns::core_ns
             return more;
          }
 
-         const std::any result = binary_ops_t<compare_op_t>::call(arg_a, arg_b);
+         const std::any result = binary_op_t<compare_op_t>::call(arg_a, arg_b);
          if (result.has_value())
             return std::any_cast<comparison_t>(result);
 

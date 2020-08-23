@@ -1,4 +1,4 @@
-// File: any_ops.cpp
+// File: any_op_selector.cpp
 //
 // Dak Copyright © 2012-2020. All Rights Reserved.
 
@@ -8,7 +8,7 @@
 
 namespace dak_ns::core_ns
 {
-   void initialize_ops()
+   void register_ops()
    {
       // Needed so that the global operations are initialized in the tests.
       convert_op_t::register_ops();
