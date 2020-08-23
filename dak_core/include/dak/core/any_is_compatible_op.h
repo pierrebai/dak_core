@@ -5,7 +5,7 @@
 #ifndef DAK_CORE_ANY_IS_COMPATIBLE_OP_H
 #define DAK_CORE_ANY_IS_COMPATIBLE_OP_H
 
-#include <dak/core/any_ops.h>
+#include <dak/core/any_nullary_ops.h>
 
 namespace dak_ns::core_ns
 {
@@ -15,12 +15,17 @@ namespace dak_ns::core_ns
    // The is-compatible operation returns true if a the types are compatible.
    // That is, the first can be converted to the second.
 
-   struct is_compatible_op_t : binary_op_t<is_compatible_op_t>
+   struct is_compatible_op_t : nullary_op_t<is_compatible_op_t, std::any, std::any>
    {
       template<class TO>
       static bool call(const std::any& arg_b)
       {
-         const std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<TO>(), arg_b);
+         const auto& ops = nullary_ops_t<is_compatible_op_t>::get_ops();
+         const auto pos = ops.find(selector_t(std::type_index(typeid(TO)), std::type_index(arg_b.type())));
+         if (pos == ops.end())
+            return false;
+
+         const std::any result = pos->second.my_op_func();
          if (result.has_value())
             return std::any_cast<bool>(result);
          else
@@ -30,7 +35,7 @@ namespace dak_ns::core_ns
       template<class TO, class FROM>
       static bool call()
       {
-         const std::any result = binary_ops_t<is_compatible_op_t>::call(std::make_any<TO>(), std::make_any<FROM>());
+         const std::any result = nullary_ops_t<is_compatible_op_t>::call<TO, FROM>();
          if (result.has_value())
             return std::any_cast<bool>(result);
          else

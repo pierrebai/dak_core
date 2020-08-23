@@ -5,7 +5,7 @@
 #ifndef DAK_CORE_ANY_STREAM_OP
 #define DAK_CORE_ANY_STREAM_OP
 
-#include <dak/core/any_ops.h>
+#include <dak/core/any_binary_ops.h>
 
 #include <ostream>
 
