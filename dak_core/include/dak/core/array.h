@@ -9,7 +9,8 @@
 
 #include <dak/core/types.h>
 #include <dak/core/ref_counted.h>
-#include <dak/core/var.h>
+#include <dak/core/any_var.h>
+#include <dak/core/var_ops.h>
 
 #include <vector>
 
@@ -82,6 +83,7 @@ namespace dak_ns::core_ns
       friend struct ref_t<array_t>;
    };
 
+   DAK_CORE_VAR_OPERATOR(+, array_t, any_var_t);
 }
 
 #endif /* DAK_CORE_ARRAY_H */

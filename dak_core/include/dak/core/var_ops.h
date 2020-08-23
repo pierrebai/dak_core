@@ -16,9 +16,13 @@ namespace dak_ns::core_ns
    // Arithmetic operators.
 
    // This defines the operator op= for the type basic_type.
+   //
    // For example, it defines += for int32.
+   //
    // It does so by extracting the value basic_type from the var_type, then applying
    // the operator, then assigning the value back to the var_type.
+   //
+   // This means the type then becomes the one that was given.
 
    #define DAK_CORE_VAR_OPERATOR(op, basic_type, var_type)              \
       inline var_type& operator op=(var_type& a, const basic_type& b)   \

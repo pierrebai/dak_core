@@ -119,7 +119,8 @@ namespace dak_ns::core_ns
       }
    };
 
-   // Needed so that the global operations are initialized in the tests. TODO: move elsewhere?
+   // Needed so that the global operations are initialized in the tests.
+   // TODO: move elsewhere?
    void register_ops();
 }
 
