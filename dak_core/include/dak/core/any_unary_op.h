@@ -89,9 +89,9 @@ namespace dak_ns::core_ns
       template <class... EXTRA_SELECTORS>
       static std::any call_op(EXTRA_ARGS... args, const std::any& arg_a)
       {
-         using selector_t = typename op_selector_t<std::any, EXTRA_SELECTORS...>::selector_t;
+         using selector_t = typename unary_op_selector_t<EXTRA_SELECTORS...>::selector_t;
          const auto& ops = get_ops<selector_t>();
-         const auto pos = ops.find(selector_t(std::type_index(arg_a.type()), std::type_index(typeid(EXTRA_SELECTORS))...));
+         const auto pos = ops.find(unary_op_selector_t<EXTRA_SELECTORS...>::make(arg_a));
          if (pos == ops.end())
             return std::any();
          return pos->second.my_op_func(args..., arg_a);
@@ -101,9 +101,9 @@ namespace dak_ns::core_ns
       template <class A, class... EXTRA_SELECTORS>
       static void register_op(const op_base_t& an_op)
       {
-         using selector_t = typename op_selector_t<std::any, EXTRA_SELECTORS...>::selector_t;
+         using selector_t = typename unary_op_selector_t<EXTRA_SELECTORS...>::selector_t;
          auto& ops = get_ops<selector_t>();
-         ops[selector_t(std::type_index(typeid(A)), std::type_index(typeid(EXTRA_SELECTORS))...)] = an_op;
+         ops[unary_op_selector_t<EXTRA_SELECTORS...>::make<A>()] = an_op;
       }
 
       template <class SELECTOR>

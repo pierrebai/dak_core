@@ -5,6 +5,7 @@
 #ifndef DAK_CORE_ANY_OP_SELECTOR
 #define DAK_CORE_ANY_OP_SELECTOR
 
+#include <any>
 #include <typeinfo>
 #include <typeindex>
 #include <utility>
@@ -13,7 +14,7 @@ namespace dak_ns::core_ns
 {
    //////////////////////////////////////////////////////////////////////////
    //
-   // Selectors for the operation.
+   // Selectors for the operations.
    //
    // These templates convert any type into the type std::type_index.
    // It is used so that we can build a tuple containing a type index
@@ -31,7 +32,64 @@ namespace dak_ns::core_ns
       using selector_t = std::tuple<typename op_selector_converter_t<SELECTORS>::selector_t...>;
    };
 
-   // Needed so that the global operations are initialized in the tests.
+   //////////////////////////////////////////////////////////////////////////
+   //
+   // Selectors for the nullary operations.
+
+   template <class... EXTRA_SELECTORS>
+   struct nullary_op_selector_t : op_selector_t<EXTRA_SELECTORS...>
+   {
+      using selector_t = typename op_selector_t<EXTRA_SELECTORS...>::selector_t;
+
+      static selector_t make()
+      {
+         return selector_t(std::type_index(typeid(EXTRA_SELECTORS))...);
+      }
+   };
+
+   //////////////////////////////////////////////////////////////////////////
+   //
+   // Selectors for the unary operations.
+
+   template <class... EXTRA_SELECTORS>
+   struct unary_op_selector_t : op_selector_t<std::any, EXTRA_SELECTORS...>
+   {
+      using selector_t = typename op_selector_t<std::any, EXTRA_SELECTORS...>::selector_t;
+
+      template <class A>
+      static selector_t make()
+      {
+         return selector_t(std::type_index(typeid(A)), std::type_index(typeid(EXTRA_SELECTORS))...);
+      }
+
+      static selector_t make(const std::any& arg_a)
+      {
+         return selector_t(std::type_index(arg_a.type()), std::type_index(typeid(EXTRA_SELECTORS))...);
+      }
+   };
+
+   //////////////////////////////////////////////////////////////////////////
+   //
+   // Selectors for the binary operations.
+
+   template <class... EXTRA_SELECTORS>
+   struct binary_op_selector_t : op_selector_t<std::any, std::any, EXTRA_SELECTORS...>
+   {
+      using selector_t = typename op_selector_t<std::any, std::any, EXTRA_SELECTORS...>::selector_t;
+
+      template <class A, class B>
+      static selector_t make()
+      {
+         return selector_t(std::type_index(typeid(A)), std::type_index(typeid(B)), std::type_index(typeid(EXTRA_SELECTORS))...);
+      }
+
+      static selector_t make(const std::any& arg_a, const std::any& arg_b)
+      {
+         return selector_t(std::type_index(arg_a.type()), std::type_index(arg_b.type()), std::type_index(typeid(EXTRA_SELECTORS))...);
+      }
+   };
+
+   // Needed so that the global operations are initialized in the tests. TODO: move elsewhere?
    void register_ops();
 }
 
