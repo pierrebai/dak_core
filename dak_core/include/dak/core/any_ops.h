@@ -141,7 +141,7 @@ namespace dak_ns::core_ns
       friend OP;
    };
 
-   template <class RET, class A, class OP, class... EXTRA_SELECTORS>
+   template <class OP, class RET, class A, class... EXTRA_SELECTORS>
    void make_unary_op(std::function<RET(const A& arg_a)> a_func)
    {
       unary_op_t<OP> op([a_func](const std::any& arg_a) -> std::any
@@ -257,7 +257,7 @@ namespace dak_ns::core_ns
       friend OP;
    };
 
-   template <class RET, class A, class B, class OP, class... EXTRA_SELECTORS>
+   template <class OP, class RET, class A, class B, class... EXTRA_SELECTORS>
    void make_binary_op(std::function<RET(const A& arg_a, const B& arg_b)> a_func)
    {
       binary_op_t<OP> op([a_func](const std::any& arg_a, const std::any& arg_b) -> std::any
