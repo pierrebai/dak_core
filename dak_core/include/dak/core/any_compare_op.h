@@ -45,7 +45,7 @@ namespace dak_ns::core_ns
       template<class A>
       static comparison_t call(const A& arg_a, const A& arg_b)
       {
-         return call(std::make_any(arg_a), std::make_any(arg_b));
+         return call(std::any(arg_a), std::any(arg_b));
       }
 
       // Note: pre-defined operations implementation are automatically registered,

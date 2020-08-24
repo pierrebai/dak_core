@@ -74,18 +74,17 @@ namespace dak_ns::core_ns
    template <class OP, class... EXTRA_ARGS>
    struct unary_op_t
    {
+      friend OP;
+
+      // The operation function signature.
       using op_func_t = std::function<std::any(EXTRA_ARGS ..., const std::any& arg_a)>;
+
+      // The operation common base class.
       using op_base_t = unary_op_t<OP, EXTRA_ARGS...>;
 
+      // Constructors.
       unary_op_t() = default;
       unary_op_t(const op_func_t& an_op) : my_op_func(an_op) {}
-
-      op_func_t my_op_func = no_op;
-
-      // The null operation, used in the default constructor.
-      static std::any no_op(EXTRA_ARGS..., const std::any&) { return {}; }
-
-      // Creator of unary operation implementations.
 
       // Creator of unary operation implementations with the optional extra args and extra selectors.
       template <class RET, class A, class... EXTRA_SELECTORS>
@@ -98,6 +97,12 @@ namespace dak_ns::core_ns
 
          register_op<A, EXTRA_SELECTORS...>(op);
       }
+
+   private:
+      // The null operation, used in the default constructor.
+      static std::any no_op(EXTRA_ARGS..., const std::any&) { return {}; }
+
+      op_func_t my_op_func = no_op;
 
       // Call a unary operation with the optional extra args and selected with the extra selectors.
       template <class... EXTRA_SELECTORS>
@@ -125,7 +130,6 @@ namespace dak_ns::core_ns
          return pos->second.my_op_func(args..., arg_a);
       }
 
-   private:
       // Register an operation implementation. Called by make_op.
       template <class A, class... EXTRA_SELECTORS>
       static void register_op(const op_base_t& an_op)

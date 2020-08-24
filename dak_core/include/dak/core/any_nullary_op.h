@@ -82,16 +82,17 @@ namespace dak_ns::core_ns
    template <class OP, class... EXTRA_ARGS>
    struct nullary_op_t
    {
+      friend OP;
+
+      // The operation function signature.
       using op_func_t = std::function<std::any(EXTRA_ARGS ...)>;
+
+      // The operation common base class.
       using op_base_t = nullary_op_t<OP, EXTRA_ARGS...>;
 
+      // Constructors.
       nullary_op_t() = default;
       nullary_op_t(const op_func_t& an_op) : my_op_func(an_op) {}
-
-      op_func_t my_op_func = no_op;
-
-      // The null operation, used in the default constructor.
-      static std::any no_op(EXTRA_ARGS...) { return {}; }
 
       // Creator of nullary operation implementations with the optional extra args and extra selectors.
       template <class RET, class... EXTRA_SELECTORS>
@@ -104,6 +105,12 @@ namespace dak_ns::core_ns
 
          register_op<EXTRA_SELECTORS...>(op);
       }
+
+   private:
+      // The null operation, used in the default constructor.
+      static std::any no_op(EXTRA_ARGS...) { return {}; }
+
+      op_func_t my_op_func = no_op;
 
       // Call a nullary operation with the optional extra args and selected with the extra selectors.
       template <class... EXTRA_SELECTORS>
@@ -131,7 +138,6 @@ namespace dak_ns::core_ns
          return pos->second.my_op_func(args...);
       }
 
-   private:
       // Register an operation implementation. Called by make_op.
       template <class... EXTRA_SELECTORS>
       static void register_op(const op_base_t& an_op)

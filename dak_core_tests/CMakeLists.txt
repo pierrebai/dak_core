@@ -2,6 +2,7 @@
 add_library(dak_core_tests SHARED
    src/any_compare_op_tests.cpp
    src/any_convert_op_tests.cpp
+   src/any_dominant_op_tests.cpp
    src/any_is_compatible_op_tests.cpp
    src/any_size_op_tests.cpp
    src/any_stream_op_tests.cpp
