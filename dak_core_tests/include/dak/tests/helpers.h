@@ -37,7 +37,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
       RETURN_WIDE_STRING(i);
    }
 
-   template<> inline std::wstring ToString<dak_ns::core_ns::index_t>(const dak_ns::core_ns::index_t& i)
+   template<> inline std::wstring ToString<__int64>(const __int64& i)
    {
       RETURN_WIDE_STRING(i);
    }
