@@ -4,6 +4,8 @@
 #include <dak/core/any_compare_op.h>
 #include <dak/tests/helpers.h>
 
+#include <algorithm>
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace dak_ns::core_ns;
 
@@ -115,14 +117,18 @@ namespace tests
          dict_t d_big1;
          dict_t d_big2;
 
-         d_small1[ns::a] = 2;
+         // Note: name_t is not sorted alphabetically.
+         name_t names[] = { ns::a, ns::b, ns::c };
+         std::sort(names, names + 3);
 
-         d_small2[ns::b] = 3;
+         d_small1[names[0]] = 2;
 
-         d_big1[ns::b] = 4;
+         d_small2[names[1]] = 3;
 
-         d_big2[ns::b] = 4;
-         d_big2[ns::c] = 4;
+         d_big1[names[1]] = 4;
+
+         d_big2[names[1]] = 4;
+         d_big2[names[2]] = 4;
 
          Assert::IsFalse(d_empty < d_empty);
          Assert::IsTrue(d_empty < d_small1);
